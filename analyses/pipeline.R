@@ -15,5 +15,8 @@ list(
   # recouvrement par station
  ,tar_target(recouvrement_substrat, calculs_recouvrement_substrat(substrat))
  ,tar_target(recouvrement_organismes, calculs_recouvrement_organismes(substrat))
+ # graphiques de recouvrement moyen par station
+ ,tar_target(barplot_substrat_station, graphique_recouvrement_substrat(recouvrement_substrat))
+ ,tar_target(barplot_organismes_station, graphique_recouvrement_organismes(recouvrement_organismes))
   
 )
