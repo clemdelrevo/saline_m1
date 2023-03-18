@@ -14,7 +14,12 @@ Imports:
     devtools,
     dplyr,
     ggplot2,
+    plotrix,
     qs,
+    stars,
+    sf,
+    spData,
     targets,
+    tidyverse,
     usethis,
     visNetwork
