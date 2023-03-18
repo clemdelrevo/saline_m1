@@ -16,3 +16,21 @@ wrangle_substrat <- function(substrat_csv){
   
   return(substrat)
 }
+
+wrangle_reunion_map <- function(reunion_map_shp, crs){
+  
+  reunion_map <- sf::st_transform(reunion_map_shp, crs = crs)
+  reunion_map <- sf::st_make_valid(reunion_map)
+  
+  return(reunion_map)
+}
+
+wrangle_points_transect <- function(points_transect_csv, crs){
+  
+  points_transect <- sf::st_as_sf(points_transect_csv, coords = c("Est", "Sud"))
+  sf::st_crs(points_transect) <- crs
+  points_transect <- sf::st_make_valid(points_transect)
+  
+  return(points_transect)
+  
+}

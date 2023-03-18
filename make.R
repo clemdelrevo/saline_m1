@@ -9,6 +9,12 @@
 #dir.create("analyses")
 #dir.create("R")
 
+#dir.create("data/points_transect")
+#dir.create("data/reunion_map")
+#dir.create("data/substrat_saline")
+#dir.create("outputs/graphique")
+#dir.create("outputs/graphique/cartes")
+#dir.create("outputs/graphique/recouvrement_station")
 
 # renv
 

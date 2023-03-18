@@ -13,7 +13,9 @@ RoxygenNote: 7.0.0
 Imports:
     devtools,
     dplyr,
+    cowplot,
     ggplot2,
+    ggspatial,
     plotrix,
     qs,
     stars,
