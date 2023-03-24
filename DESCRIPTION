@@ -18,10 +18,13 @@ Imports:
     ggspatial,
     plotrix,
     qs,
+    readr,
+    rstatix,
     stars,
     sf,
     spData,
     targets,
+    tidyr,
     tidyverse,
     usethis,
     visNetwork

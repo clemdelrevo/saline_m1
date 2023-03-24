@@ -1,19 +1,28 @@
 test_recouvrement_substrat <- function(recouvrement_substrat){
   
-  recouvrement_substrat_long <- recouvrement_substrat |>
+  #targets::tar_load(recouvrement_substrat)
+  factor <- levels(recouvrement_substrat$type_substrat)
+  test_shapiro <- list()
+  test_kruskal <- list()
+  tra <- list()
+  for(i in factor) {
+    
+    recouvrement_substrat_factor <- recouvrement_substrat |>
     dplyr::select(station, type_substrat, recouvrement) |>
-    tidyr::spread(key = type_substrat, value = recouvrement, -station)
+    dplyr::filter(type_substrat == i)
   
-  test_shapiro <- tapply(recouvrement_substrat$recouvrement, 
-                         recouvrement_substrat$type_substrat, shapiro.test)
-  print(test_shapiro)
+    test_shapiro[[i]] <- tapply(recouvrement_substrat_factor$recouvrement, 
+                         recouvrement_substrat_factor$station, shapiro.test)
+    
+    test_kruskal[[i]] <- kruskal.test(recouvrement_substrat_factor$recouvrement ~ 
+                                    recouvrement_substrat_factor$station)
   
-  test_kruskal <- kruskal.test(recouvrement_substrat$recouvrement ~ 
-                                 interaction(recouvrement_substrat$type_substrat,
-                                             recouvrement_substrat$station))
-  
-  tra<-pairwise.wilcox.test(recouvrement_substrat$recouvrement, 
-                            interaction(recouvrement_substrat$type_substrat,
-                                        recouvrement_substrat$station), 
+    tra[[i]]<-pairwise.wilcox.test(recouvrement_substrat_factor$recouvrement, 
+                            recouvrement_substrat_factor$station, 
                             p.adjust.method = "BH") 
+  }
+  
+  print(test_shapiro)
+  print(test_kruskal)
+  print(tra)
 }
