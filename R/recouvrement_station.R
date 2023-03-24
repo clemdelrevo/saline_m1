@@ -10,6 +10,7 @@ calculs_recouvrement_substrat <- function(substrat){
 
 calculs_recouvrement_organismes <- function(substrat){
   
+  #targets::tar_load(substrat)
   recouvrement_organismes <- substrat |>
     dplyr::group_by(groupe, radiale, station, transect, type_substrat,
                     organismes_benthiques) |>

@@ -16,6 +16,7 @@ Imports:
     cowplot,
     ggplot2,
     ggspatial,
+    gridExtra,
     plotrix,
     qs,
     readr,
