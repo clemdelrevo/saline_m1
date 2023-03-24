@@ -8,7 +8,7 @@ graphique_recouvrement_substrat <- function(recouvrement_substrat){
                      erreur_st = plotrix::std.error(recouvrement))
   
   
-  barplot_substrat_station <-ggplot2::ggplot(barplot_substrat_station, ggplot2::aes(y = moyenne_recouvrement, 
+  ggplot2::ggplot(barplot_substrat_station, ggplot2::aes(y = moyenne_recouvrement, 
                                                       x = type_substrat,
                                                       fill = station))+
     ggplot2::scale_fill_brewer(palette = "Set1")+
@@ -18,7 +18,14 @@ graphique_recouvrement_substrat <- function(recouvrement_substrat){
                                         ymax = moyenne_recouvrement + erreur_st),
                            position = ggplot2::position_dodge(0.9), width = 0.2)+
     ggplot2::ylab("% cover ± SE")+
-    ggplot2::theme(axis.title.x = ggplot2::element_blank(), legend.position = "none")
+    ggplot2::theme(axis.title.x = ggplot2::element_blank(), legend.position = "none")+
+    ggplot2::ylim(c(0,90))+
+    ggplot2::annotate("text", x = 1.7, y = 25, label = "***")+
+    ggplot2::annotate("text", x =2.7 , y = 11, label = "***")+
+    ggplot2::annotate("text", x = 3, y = 17, label = "***")+
+    ggplot2::annotate("text", x = 3.3, y = 27, label = "***")+
+    ggplot2::annotate("text", x = 3.70, y = 79, label = "***")
+    
   #dir.create("outputs/graphique")
   #dir.create("outputs/graphique/recouvrement_station")
   ggplot2::ggsave("outputs/graphique/recouvrement_station/recouvrement_susbtrat_station.png",

@@ -14,7 +14,7 @@ test_recouvrement_substrat <- function(recouvrement_substrat){
     
   }
   
-  lapply(fit, Anova, test = "F")
+  print(lapply(fit, Anova, test = "F"))
   
   for(i in seq_along(fit)) {
     
