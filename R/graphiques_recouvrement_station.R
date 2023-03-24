@@ -24,6 +24,8 @@ graphique_recouvrement_substrat <- function(recouvrement_substrat){
   ggplot2::ggsave("outputs/graphique/recouvrement_station/recouvrement_susbtrat_station.png",
                   plot = ggplot2::last_plot(), dpi = 500)
   
+  return(barplot_substrat_station)
+  
 }
 
 graphique_recouvrement_organismes_corals <- function(recouvrement_organismes){
@@ -55,6 +57,8 @@ graphique_recouvrement_organismes_corals <- function(recouvrement_organismes){
   
   ggplot2::ggsave("outputs/graphique/recouvrement_station/recouvrement_organismes_corals_station.png",
                   plot = ggplot2::last_plot(), dpi = 500)
+  
+  return(barplot_organismes_corals_station)
   
 }
 
@@ -88,21 +92,31 @@ graphique_recouvrement_organismes_others <- function(recouvrement_organismes){
   ggplot2::ggsave("outputs/graphique/recouvrement_station/recouvrement_organismes_others_station.png",
                   plot = ggplot2::last_plot(), dpi = 500)
   
+  return(barplot_organismes_others_station)
+  
 }
 
-assemble_organismes <- function(barplot_substrat_station,
+graphique_assemble_organismes <- function(barplot_substrat_station,
                                 barplot_organismes_corals_station, 
-                                barplot_organismes_others_station ){
+                                barplot_organismes_others_station){
   
-  grid::grid.newpage() 
-  # Créer la mise en page : nrow = 2, ncol = 2
-  grid::pushViewport(viewport(layout = grid.layout(2, 2)))
-  # Une fonction pour definir une region dans la mise en page
-  define_region <- function(row, col){
-    grid::viewport(layout.pos.row = row, layout.pos.col = col)
-  } 
-  # Arranger les graphiques
-  print(barplot_substrat_station, vp=define_region(1, 1))
-  print(barplot_organismes_corals_station, vp = define_region(1, 2))
-  print(barplot_organismes_others_station, vp = define_region(2, 1:2))
+    #targets::tar_load(barplot_substrat_station)
+    #targets::tar_load(barplot_organismes_corals_station)
+    #targets::tar_load(barplot_organismes_others_station)
+    png(filename = "outputs/graphique/recouvrement_station/assemble_graphique_organismes_station.png"
+        , width = 1080, height = 720, res = 100)
+    grid::grid.newpage() 
+    # Créer la mise en page : nrow = 2, ncol = 2
+    grid::pushViewport(grid::viewport(layout = grid::grid.layout(2, 2)))
+    # Une fonction pour definir une region dans la mise en page
+    define_region <- function(row, col){
+      grid::viewport(layout.pos.row = row, layout.pos.col = col)
+    } 
+    # Arranger les graphiques
+      print(barplot_substrat_station, vp=define_region(1, 1))
+      print(barplot_organismes_corals_station, vp = define_region(1, 2))
+      print(barplot_organismes_others_station, vp = define_region(2, 1:2))
+  
+      dev.off()
 }
+  

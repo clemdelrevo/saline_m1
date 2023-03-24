@@ -22,7 +22,6 @@ test_recouvrement_substrat <- function(recouvrement_substrat){
                             p.adjust.method = "BH") 
   }
   
-  print(test_shapiro)
-  print(test_kruskal)
-  print(tra)
+  print(c(test_shapiro, test_kruskal, tra))
+  
 }

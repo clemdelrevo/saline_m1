@@ -5,11 +5,16 @@
 read_substrat <- function(){
   
   #dir.create("data/substrat_saline")
-  substrat_csv <- read.csv2("data/substrat_saline/substrat_saline_m1.csv", dec = ",")
+  substrat_csv <- read.csv2("data/substrat_saline/substrat_saline_m1.csv", 
+                            dec = "," , sep = ";", header = T)
   
   return(substrat_csv)
   
 }
+
+# --- REUNION MAP --------------------------------------------------------------
+
+# read the Reunion shapefile
 
 read_map <- function(){
   
@@ -20,6 +25,10 @@ read_map <- function(){
   return(reunion_map_shp)
   
 }
+
+# --- TRANSECT POINTS ----------------------------------------------------------
+
+# read georeferencement transect point file
 
 read_points_transect <- function(){
   

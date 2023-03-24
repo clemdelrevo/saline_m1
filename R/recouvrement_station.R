@@ -3,7 +3,7 @@ calculs_recouvrement_substrat <- function(substrat){
   recouvrement_substrat <- substrat |>
     dplyr::group_by(groupe, radiale, station, transect, type_substrat) |>
     dplyr::summarise(recouvrement = (dplyr::n()/50)*100)
-  
+
   return(recouvrement_substrat)
   
 }
