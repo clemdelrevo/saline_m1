@@ -21,10 +21,12 @@ list(
   # recouvrement par station
  ,tar_target(recouvrement_substrat, calculs_recouvrement_substrat(substrat))
  ,tar_target(recouvrement_organismes, calculs_recouvrement_organismes(substrat))
+ # tests recouvrement du substrat par station
+ ,tar_target(test_substrat_station, test_recouvrement_substrat(recouvrement_substrat))
  # graphiques de recouvrement moyen par station
  ,tar_target(barplot_substrat_station, graphique_recouvrement_substrat(recouvrement_substrat))
  ,tar_target(barplot_organismes_station, graphique_recouvrement_organismes(recouvrement_organismes))
  # map echantillonnage
- ,tar_target(map_saline, map_echantillonnage(points_transect, reunion_map))
+ 
   
 )
