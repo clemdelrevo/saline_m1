@@ -8,7 +8,7 @@ graphique_recouvrement_substrat <- function(recouvrement_substrat){
                      erreur_st = plotrix::std.error(recouvrement))
   
   
-  ggplot2::ggplot(barplot_substrat_station, ggplot2::aes(y = moyenne_recouvrement, 
+  barplot_substrat_station <- ggplot2::ggplot(barplot_substrat_station, ggplot2::aes(y = moyenne_recouvrement, 
                                                       x = type_substrat,
                                                       fill = station))+
     ggplot2::scale_fill_brewer(palette = "Set1")+
