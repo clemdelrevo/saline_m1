@@ -1,4 +1,4 @@
-test_recouvrement_substrat <- function(recouvrement_substrat){
+test_recouvrement_substrat_station <- function(recouvrement_substrat){
   
   #targets::tar_load(recouvrement_substrat)
   
@@ -25,7 +25,7 @@ test_recouvrement_substrat <- function(recouvrement_substrat){
     
 }
 
-test_recouvrement_corals <- function(recouvrement_organismes) {
+test_recouvrement_corals_station <- function(recouvrement_organismes) {
   
   #targets::tar_load(recouvrement_organismes)
   fit <- list()
@@ -53,7 +53,7 @@ test_recouvrement_corals <- function(recouvrement_organismes) {
   
 }
 
-test_recouvrement_others <- function(recouvrement_organismes) {
+test_recouvrement_others_station <- function(recouvrement_organismes) {
   
   #targets::tar_load(recouvrement_organismes)
 

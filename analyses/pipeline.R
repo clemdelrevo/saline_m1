@@ -21,18 +21,31 @@ list(
   # recouvrement par station
  ,tar_target(recouvrement_substrat, calculs_recouvrement_substrat(substrat))
  ,tar_target(recouvrement_organismes, calculs_recouvrement_organismes(substrat))
- # tests recouvrement du substrat par station
- ,tar_target(test_substrat_station, test_recouvrement_substrat(recouvrement_substrat))
+ # tests de recouvrement du substrat par station
+ ,tar_target(test_substrat_station, test_recouvrement_substrat_station(recouvrement_substrat))
+ # test de recouvrement des organismes par substrat et par station
+ ,tar_target(test_corals_station, test_recouvrement_corals_station(recouvrement_organismes))
+ ,tar_target(test_others_station, test_recouvrement_others_station(recouvrement_organismes))
  # graphiques de recouvrement moyen par station
- ,tar_target(barplot_substrat_station, graphique_recouvrement_substrat(recouvrement_substrat))
+ ,tar_target(barplot_substrat_station, graphique_recouvrement_substrat_station(recouvrement_substrat))
  ,tar_target(barplot_organismes_corals_station, 
-             graphique_recouvrement_organismes_corals(recouvrement_organismes))
+             graphique_recouvrement_organismes_corals_station(recouvrement_organismes))
  ,tar_target(barplot_organismes_others_station,
-             graphique_recouvrement_organismes_others(recouvrement_organismes))
- ,tar_target(assemble_graphique_organismes, 
-             graphique_assemble_organismes(barplot_substrat_station,
+             graphique_recouvrement_organismes_others_station(recouvrement_organismes))
+ ,tar_target(assemble_graphique_station, 
+             graphique_assemble_station(barplot_substrat_station,
                                            barplot_organismes_corals_station, 
                                            barplot_organismes_others_station))
+ # graphiques de recouvrement moyen par radiale
+ ,tar_target(barplot_substrat_radiale, graphique_recouvrement_substrat_radiale(recouvrement_substrat))
+ ,tar_target(barplot_organismes_corals_radiale, 
+             graphique_recouvrement_organismes_corals_radiale(recouvrement_organismes))
+ ,tar_target(barplot_organismes_others_radiale,
+             graphique_recouvrement_organismes_others_radiale(recouvrement_organismes))
+ ,tar_target(assemble_graphique_radiale, 
+             graphique_assemble_radiale(barplot_substrat_radiale,
+                                           barplot_organismes_corals_radiale, 
+                                           barplot_organismes_others_radiale))
  # map echantillonnage
  
   
