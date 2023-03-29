@@ -15,6 +15,7 @@
 #dir.create("outputs/graphique")
 #dir.create("outputs/graphique/cartes")
 #dir.create("outputs/graphique/recouvrement_station")
+#dir.create("outputs/graphique/recouvrement_radiale")
 
 # renv
 

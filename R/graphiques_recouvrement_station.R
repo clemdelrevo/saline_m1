@@ -157,4 +157,3 @@ graphique_assemble_station <- function(barplot_substrat_station,
   
       dev.off()
 }
-  

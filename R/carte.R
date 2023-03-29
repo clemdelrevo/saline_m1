@@ -38,5 +38,4 @@ map_echantillonnage <- function(points_transect, reunion_map){
   ggplot2::ggsave("outputs/graphique/cartes/map_saline.png", dpi = 500,
                   plot = ggplot2::last_plot())
   
-  return(map_saline)
 }

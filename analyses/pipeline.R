@@ -46,7 +46,10 @@ list(
              graphique_assemble_radiale(barplot_substrat_radiale,
                                            barplot_organismes_corals_radiale, 
                                            barplot_organismes_others_radiale))
+ # analyse du biais
+ ,tar_target(calculs_bias, delta_calculs(substrat))
+ ,tar_target(graphiques_bias, boxplot_bias(calculs_bias))
  # map echantillonnage
+ #,tar_target(map, map_echantillonnage(points_transect, reunion_map))
  
-  
 )
