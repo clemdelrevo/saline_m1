@@ -28,6 +28,7 @@ Imports:
     plotrix,
     qs,
     readr,
+    rgeos,
     rstatix,
     stars,
     sf,

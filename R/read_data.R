@@ -20,17 +20,12 @@ read_map <- function(){
   
   #dir.create("data/reunion_map")
   reunion_map_path <- "data/reunion_map/la_reunion.shp"
+  
+  shapefile <- sf::st_read(reunion_map_path)
+  shapefile_lisse <- sf::st_simplify(shapefile, dTolerance = 0.4)
+  sf::st_write(shapefile_lisse, "data/reunion_map/shapefile.shp")
   reunion_map_shp <- sf::st_read(reunion_map_path)
   
-  reunion_sat_path <- "data/reunion_map/saline.jp2"
-  reunion_sat_gdal <- rgdal::readGDAL(reunion_sat_path)
-  reunion_sat <- stars::st_as_stars(reunion_sat_gdal)
-  reunion_sat2 <- sf::st_as_sf(reunion_sat_gdal)
-  dev.new()
-  
-  ggplot2::ggplot()+
-    ggplot2::geom_sf(reunion_sat)
-  plot(reunion_sat)
   
   return(reunion_map_shp)
   

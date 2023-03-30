@@ -2076,6 +2076,16 @@
         "sp"
       ]
     },
+    "rgeos": {
+      "Package": "rgeos",
+      "Version": "0.6-2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "9511acfd44e26cd310b9975f63ac9f72",
+      "Requirements": [
+        "sp"
+      ]
+    },
     "rjson": {
       "Package": "rjson",
       "Version": "0.2.21",

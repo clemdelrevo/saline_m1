@@ -5,12 +5,12 @@ map_echantillonnage <- function(points_transect, reunion_map){
   points_transect <- points_transect[1:9,]
   
   saline <- ggplot2::ggplot(data = reunion_map)+
-    ggplot2::geom_sf(ggplot2::aes(fill = rb_depth_a), 
+    ggplot2::geom_sf(ggplot2::aes(fill = l1_attrib), 
                      col = "grey", )+
     ggplot2::theme_classic()+
     ggplot2::geom_sf(data = points_transect, fill = "white", shape = 16,
                      col = "red")+
-    ggplot2::scale_fill_manual(values = c("white", "sienna", "turquoise3", "steelblue3" ))+
+    #ggplot2::scale_fill_manual(values = c("white", "sienna", "turquoise3", "steelblue3" ))+
     ggplot2::theme(panel.background = ggplot2::element_rect(fill = "light blue")) +
     ggplot2::coord_sf(xlim = c(55.22, 55.26), ylim = c(-21.09, -21.119),
                       expand = FALSE)+
