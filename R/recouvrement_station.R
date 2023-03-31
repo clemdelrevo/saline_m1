@@ -12,9 +12,24 @@ calculs_recouvrement_organismes <- function(substrat){
   
   #targets::tar_load(substrat)
   recouvrement_organismes <- substrat |>
+    dplyr::group_by(groupe, radiale, station, transect, organismes_benthiques) |>
+    dplyr::summarise(recouvrement = (dplyr::n()/50)*100) 
+  
+  return(recouvrement_organismes)
+  
+}
+
+calculs_recouvrement_organismes_in_substrat <- function(substrat){
+  
+  #targets::tar_load(substrat)
+  recouvrement_organismes_in_substrat <- substrat |>
     dplyr::group_by(groupe, radiale, station, transect, type_substrat,
                     organismes_benthiques) |>
     dplyr::summarise(recouvrement = (dplyr::n()/50)*100) 
   
-  return(recouvrement_organismes)
+  return(recouvrement_organismes_in_substrat)
+  
 }
+
+
+  

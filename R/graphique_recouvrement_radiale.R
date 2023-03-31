@@ -30,11 +30,11 @@ graphique_recouvrement_substrat_radiale <- function(recouvrement_substrat){
   
 }
 
-graphique_recouvrement_organismes_corals_radiale <- function(recouvrement_organismes){
+graphique_recouvrement_organismes_corals_radiale <- function(recouvrement_organismes_in_substrat){
   
-  #targets::tar_load(recouvrement_organismes)
+  #targets::tar_load(recouvrement_organismes_in_substrat)
   corals <- c("C_B", "C_D", "C_E", "C_F", "C_L", "C_M", "C_SM")
-  organismes_corals_radiale <- recouvrement_organismes |>
+  organismes_corals_radiale <- recouvrement_organismes_in_substrat |>
     dplyr::group_by(radiale, type_substrat, organismes_benthiques) |>
     dplyr::summarise(moyenne_recouvrement = mean(recouvrement),
                      sd_recouvrement = sd(recouvrement),
@@ -64,11 +64,11 @@ graphique_recouvrement_organismes_corals_radiale <- function(recouvrement_organi
   
 }
 
-graphique_recouvrement_organismes_others_radiale <- function(recouvrement_organismes){
+graphique_recouvrement_organismes_others_in_substrat_radiale <- function(recouvrement_organismes_in_substrat){
   
-  #targets::tar_load(recouvrement_organismes)
+  #targets::tar_load(recouvrement_organismes_in_substrat)
   others <- c("COR", "CYA", "GA", "INV", "MAC", "NU" )
-  organismes_others_radiale <- recouvrement_organismes |>
+  organismes_others_in_substrat_radiale <- recouvrement_organismes_in_substrat |>
     dplyr::group_by(radiale, type_substrat, organismes_benthiques) |>
     dplyr::summarise(moyenne_recouvrement = mean(recouvrement),
                      sd_recouvrement = sd(recouvrement),
@@ -76,7 +76,7 @@ graphique_recouvrement_organismes_others_radiale <- function(recouvrement_organi
     dplyr::filter(type_substrat != "CV") |>
     dplyr::filter(organismes_benthiques %in% others)
   
-  barplot_organismes_others_radiale <- ggplot2::ggplot(organismes_others_radiale, 
+  barplot_organismes_others_radiale <- ggplot2::ggplot(organismes_others_in_substrat_radiale, 
                                                        ggplot2::aes(y = moyenne_recouvrement, 
                                                                     x = organismes_benthiques,
                                                                     fill = radiale ))+

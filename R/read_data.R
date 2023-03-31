@@ -20,11 +20,7 @@ read_map <- function(){
   
   #dir.create("data/reunion_map")
   reunion_map_path <- "data/reunion_map/la_reunion.shp"
-  
-  shapefile <- sf::st_read(reunion_map_path)
-  shapefile_lisse <- sf::st_simplify(shapefile, dTolerance = 0.4)
-  sf::st_write(shapefile_lisse, "data/reunion_map/shapefile.shp")
-  reunion_map_shp <- sf::st_read(reunion_map_path)
+  reunion_map_shp  <- sf::st_read(reunion_map_path)
   
   
   return(reunion_map_shp)

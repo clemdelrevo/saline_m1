@@ -71,10 +71,39 @@ graphique_recouvrement_organismes_corals_station <- function(recouvrement_organi
 }
 
 graphique_recouvrement_organismes_others_station <- function(recouvrement_organismes){
-  
+
   #targets::tar_load(recouvrement_organismes)
   others <- c("COR", "CYA", "GA", "INV", "MAC", "NU" )
   organismes_others_station <- recouvrement_organismes |>
+    dplyr::group_by(station, organismes_benthiques) |>
+    dplyr::summarise(moyenne_recouvrement = mean(recouvrement),
+                     sd_recouvrement = sd(recouvrement),
+                     erreur_st = plotrix::std.error(recouvrement)) |>
+    dplyr::filter(organismes_benthiques %in% others)
+  
+  barplot_organismes_others_station <- ggplot2::ggplot(organismes_others_station, 
+                                                       ggplot2::aes(y = moyenne_recouvrement, 
+                                                                    x = organismes_benthiques,
+                                                                    fill = station ))+
+    ggplot2::scale_fill_brewer(palette = "Set1")+
+    ggplot2::theme_bw()+
+    ggplot2::geom_col(position = "dodge")+
+    ggplot2::geom_errorbar(ggplot2::aes(ymin = moyenne_recouvrement,
+                                        ymax = moyenne_recouvrement + erreur_st),
+                           position = ggplot2::position_dodge(0.9), width = 0.2)+
+    ggplot2::ylab("% cover ± SE")+
+    ggplot2::theme(axis.title.x = ggplot2::element_blank())
+  
+  ggplot2::ggsave("outputs/graphique/recouvrement_station/recouvrement_organismes_others_station.png",
+                  plot = ggplot2::last_plot(), dpi = 500)
+  
+}
+
+graphique_recouvrement_organismes_others_in_substrat_station <- function(recouvrement_organismes_in_substrat){
+  
+  #targets::tar_load(recouvrement_organismes)
+  others <- c("COR", "CYA", "GA", "INV", "MAC", "NU" )
+  organismes_others_in_substrat_station <- recouvrement_organismes_in_substrat |>
     dplyr::group_by(station, type_substrat, organismes_benthiques) |>
     dplyr::summarise(moyenne_recouvrement = mean(recouvrement),
                      sd_recouvrement = sd(recouvrement),
@@ -82,7 +111,7 @@ graphique_recouvrement_organismes_others_station <- function(recouvrement_organi
     dplyr::filter(type_substrat != "CV") |>
     dplyr::filter(organismes_benthiques %in% others)
   
-  barplot_organismes_others_station <- ggplot2::ggplot(organismes_others_station, 
+  barplot_organismes_others_station <- ggplot2::ggplot(organismes_others_in_substrat_station, 
                                                        ggplot2::aes(y = moyenne_recouvrement, 
                                                                     x = organismes_benthiques,
                                                                     fill = station ))+
@@ -127,7 +156,7 @@ graphique_recouvrement_organismes_others_station <- function(recouvrement_organi
                                      type_substrat == "D"), 
                        ggplot2::aes(x = 3.3, y = 23.5, label = "***"),  size = 3)
   
-  ggplot2::ggsave("outputs/graphique/recouvrement_station/recouvrement_organismes_others_station.png",
+  ggplot2::ggsave("outputs/graphique/recouvrement_station/recouvrement_organismes_others_in_substrat_station.png",
                   plot = ggplot2::last_plot(), dpi = 500)
   
   return(barplot_organismes_others_station)
