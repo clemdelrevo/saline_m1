@@ -101,7 +101,7 @@ graphique_recouvrement_organismes_others_station <- function(recouvrement_organi
 
 graphique_recouvrement_organismes_others_in_substrat_station <- function(recouvrement_organismes_in_substrat){
   
-  #targets::tar_load(recouvrement_organismes)
+  #targets::tar_load(recouvrement_organismes_in_substrat)
   others <- c("COR", "CYA", "GA", "INV", "MAC", "NU" )
   organismes_others_in_substrat_station <- recouvrement_organismes_in_substrat |>
     dplyr::group_by(station, type_substrat, organismes_benthiques) |>
@@ -111,7 +111,7 @@ graphique_recouvrement_organismes_others_in_substrat_station <- function(recouvr
     dplyr::filter(type_substrat != "CV") |>
     dplyr::filter(organismes_benthiques %in% others)
   
-  barplot_organismes_others_station <- ggplot2::ggplot(organismes_others_in_substrat_station, 
+  barplot_organismes_others_in_substrat_station <- ggplot2::ggplot(organismes_others_in_substrat_station, 
                                                        ggplot2::aes(y = moyenne_recouvrement, 
                                                                     x = organismes_benthiques,
                                                                     fill = station ))+
@@ -123,43 +123,43 @@ graphique_recouvrement_organismes_others_in_substrat_station <- function(recouvr
                            position = ggplot2::position_dodge(0.9), width = 0.2)+
     ggplot2::ylab("% cover ± SE")+
     ggplot2::theme(axis.title.x = ggplot2::element_blank())+
-    ggplot2::facet_wrap(~ type_substrat)+
+    ggplot2::facet_grid(~type_substrat)+
     ggplot2::theme(panel.spacing = grid::unit(0.3, "cm"))+
-    ggplot2::geom_text(data = subset(organismes_others_station, 
+    ggplot2::geom_text(data = subset(organismes_others_in_substrat_station, 
                                      type_substrat == "SD"), 
                        ggplot2::aes(x = 6.3, y = 29, label = "***"), size = 3)+
-    ggplot2::geom_text(data = subset(organismes_others_station, 
+    ggplot2::geom_text(data = subset(organismes_others_in_substrat_station, 
                                      type_substrat == "SD"), 
                        ggplot2::aes(x = 6, y = 37.5, label = "***"),  size = 3)+
-    ggplot2::geom_text(data = subset(organismes_others_station, 
+    ggplot2::geom_text(data = subset(organismes_others_in_substrat_station, 
                                      type_substrat == "SD"), 
                        ggplot2::aes(x = 5.7, y = 44, label = "***"),  size = 3)+
     ggplot2::geom_segment(x=3.7, xend=3.7, y=5.5, yend=6.5, col="black", 
-                          data = subset(organismes_others_station, 
+                          data = subset(organismes_others_in_substrat_station, 
                                         type_substrat == "SD")) + 
     ggplot2::geom_segment(x=4, xend=4, y=5.5, yend=6.5, col="black", 
-                          data = subset(organismes_others_station, 
+                          data = subset(organismes_others_in_substrat_station, 
                                         type_substrat == "SD")) + 
     ggplot2::geom_segment(x=3.7, xend=4, y=6.5, yend=6.5, col="black", 
-                          data = subset(organismes_others_station, 
+                          data = subset(organismes_others_in_substrat_station, 
                                         type_substrat == "SD"))+
-    ggplot2::geom_text(data = subset(organismes_others_station, 
+    ggplot2::geom_text(data = subset(organismes_others_in_substrat_station, 
                                      type_substrat == "SD"), 
                        ggplot2::aes(x = 3.85, y = 7, label = "**"),  size = 3)+
-    ggplot2::geom_text(data = subset(organismes_others_station, 
+    ggplot2::geom_text(data = subset(organismes_others_in_substrat_station, 
                                      type_substrat == "D"), 
                        ggplot2::aes(x = 2.7, y = 6.5, label = "***"),  size = 3)+
-    ggplot2::geom_text(data = subset(organismes_others_station, 
+    ggplot2::geom_text(data = subset(organismes_others_in_substrat_station, 
                                      type_substrat == "D"), 
                        ggplot2::aes(x = 3, y = 11.5, label = "***"),  size = 3)+
-    ggplot2::geom_text(data = subset(organismes_others_station, 
+    ggplot2::geom_text(data = subset(organismes_others_in_substrat_station, 
                                      type_substrat == "D"), 
                        ggplot2::aes(x = 3.3, y = 23.5, label = "***"),  size = 3)
   
   ggplot2::ggsave("outputs/graphique/recouvrement_station/recouvrement_organismes_others_in_substrat_station.png",
                   plot = ggplot2::last_plot(), dpi = 500)
   
-  return(barplot_organismes_others_station)
+  return(barplot_organismes_others_in_substrat_station)
   
 }
 
