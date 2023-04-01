@@ -1,6 +1,6 @@
 library(targets)
 
-tar_option_set(format = "qs", error = "null")
+tar_option_set(format = "qs")
 
 tar_source()
 
@@ -26,11 +26,13 @@ list(
  ,tar_target(recouvrement_organismes_in_substrat, calculs_recouvrement_organismes_in_substrat(substrat))
  
  # tests de recouvrement du substrat par station
- ,tar_target(test_substrat_station, test_recouvrement_substrat_station(recouvrement_substrat))
+ ,tar_target(substrat_filter, test_recouvrement_substrat_station(recouvrement_substrat))
+ #,tar_target(fit, fit_function(substrat_filter))
  
  # test de recouvrement des organismes par substrat et par station
- ,tar_target(test_corals_station, test_recouvrement_corals_station(recouvrement_organismes_in_substrat))
- ,tar_target(test_others_station, test_recouvrement_others_station(recouvrement_organismes_in_substrat))
+ #,tar_target(test_corals_station, test_recouvrement_corals_station(recouvrement_organismes_in_substrat))
+ #,tar_target(test_others_station, test_recouvrement_others_station(recouvrement_organismes))
+ #,tar_target(test_others_in_substrat_station, test_recouvrement_others_in_substrat_station(recouvrement_organismes_in_substrat))
  
  # graphiques de recouvrement moyen par station
  ,tar_target(barplot_substrat_station, graphique_recouvrement_substrat_station(recouvrement_substrat))

@@ -2,65 +2,97 @@ test_recouvrement_substrat_station <- function(recouvrement_substrat){
   
   #targets::tar_load(recouvrement_substrat)
   
-  fit <- list()
+  fit_substrat <- list()
+  perm_test    <- list()
+  tukey_test   <- list()
   
   for(i in levels(recouvrement_substrat$type_substrat)){
     
     #i = "D"
-    substrat_filter <- recouvrement_substrat |>
+    filter <- recouvrement_substrat |>
       dplyr::filter(type_substrat == i)
     
-    fit_temp <- glm(substrat_filter$recouvrement ~ substrat_filter$station, 
-                    family = "poisson")
+    fit_temp <- glm(formula = filter$recouvrement ~ station, family = "poisson",
+                    data = filter)
+    fit_substrat[[i]] <- fit_temp
     
-    fit[[i]] <- fit_temp 
+    perm <- pgirmess::PermTest(fit_substrat[[i]],  B=9999)
+    perm_test[[i]] <- perm
+
+    tukey_model <- multcomp::glht(fit_substrat[[i]], linfct= multcomp::mcp(station="Tukey"))
+    tukey_test[[i]] <- summary(tukey_model)
+    
+    resultats_substrat <- list(perm_test, tukey_test)
     
   }
   
-  return(fit)
+  return(resultats_substrat)
   
-  print(lapply(fit, pgirmess::PermTest, B=9999))
-  
-  for(i in seq_along(fit)) {
-    
-  print(summary(multcomp::glht(fit[[i]], linfct= multcomp::mcp(station="Tukey"))))
-
-  }  
-    
 }
 
 test_recouvrement_corals_station <- function(recouvrement_organismes_in_substrat) {
   
   #targets::tar_load(recouvrement_organismes_in_substrat)
-  fit <- list()
-  factor <- c("C_B", "C_D", "C_E", "C_F", "C_L", "C_M", "C_SM")
+  
+  factor     <- c("C_B", "C_D", "C_E", "C_F", "C_L", "C_M", "C_SM")
+  fit_corals <- list()
+  perm_test  <- list()
+  tukey_test <- list()
   
   for(i in factor) {
     
     #i = "C_D"
-    recouvrement_corals <- recouvrement_organismes_in_substrat |>
+    filter <- recouvrement_organismes_in_substrat |>
       dplyr::filter(organismes_benthiques == i, type_substrat == "CV")
     
-    fit_temp <- glm(recouvrement_corals$recouvrement ~ station, data = recouvrement_corals, family = "poisson")
+    fit_temp <- glm(formula = filter$recouvrement ~ station, family = "poisson",
+                    data = filter)
+    fit_corals[[i]] <- fit_temp
+    
+    perm <- pgirmess::PermTest(fit_corals[[i]],  B=9999)
+    perm_test[[i]] <- perm
+    
+    tukey_model <- multcomp::glht(fit_corals[[i]], linfct= multcomp::mcp(station="Tukey"))
+    tukey_test[[i]] <- summary(tukey_model)
+    
+    resultats_corals <- list(perm_test, tukey_test)
+    
+  }  
+  
+  return(resultats_corals)
+  
+}
+
+test_recouvrement_others_station <- function(recouvrement_organismes_in_substrat) {
+  
+  #targets::tar_load(recouvrement_organismes_in_substrat)
+  fit <- list()
+  orga <- c("COR", "GA", "INV", "MAC", "NU")
+  
+  for(i in orga) {
+    
+    #i = "C_D"
+    recouvrement_others <- recouvrement_organismes_in_substrat |>
+      dplyr::filter(organismes_benthiques == i)
+    
+    fit_temp <- glm(recouvrement_others$recouvrement ~ station, data = recouvrement_others, family = "poisson")
     
     fit[[i]] <- fit_temp
     
   }  
   
-  return(fit)
-  
   print(lapply(fit, pgirmess::PermTest, B=9999))
- 
+  
   
   for(i in seq_along(fit)) {
     
-  print(summary(multcomp::glht(fit[[i]], linfct= multcomp::mcp(station="Tukey"))))
+    print(summary(multcomp::glht(fit[[i]], linfct= multcomp::mcp(station="Tukey"))))
     
   }
   
 }
 
-test_recouvrement_others_station <- function(recouvrement_organismes_in_substrat) {
+test_recouvrement_others_in_substrat_station <- function(recouvrement_organismes_in_substrat) {
   
   #targets::tar_load(recouvrement_organismes_in_substrat)
 
@@ -73,18 +105,16 @@ test_recouvrement_others_station <- function(recouvrement_organismes_in_substrat
     for(j in orga) {
       
       #i = "SD" ; j = "GA"
-      recouvrement_others <- recouvrement_organismes_in_substrat |>
+      recouvrement_others_in_substrat <- recouvrement_organismes_in_substrat |>
         dplyr::filter(type_substrat == i, organismes_benthiques == j)
       
-      fit_temp <- glm(recouvrement_others$recouvrement ~ station, data = recouvrement_others, 
+      fit_temp <- glm(recouvrement_others_in_substrat$recouvrement ~ station, data = recouvrement_others_in_substrat, 
                       family = "poisson")
       
       fit[[i]][[j]] <- fit_temp
       
     }
   }
-  
-  return(fit)
   
   fit$D <- fit$D[-3]
   
@@ -119,4 +149,22 @@ test_recouvrement_others_station <- function(recouvrement_organismes_in_substrat
     
   }  
         
+}
+
+
+recouvrement_in_station <- function(){
+  
+  
+  recouvrement <- recouvrement_organismes_in_substrat |>
+    dplyr::filter(station == "DAR", organismes_benthiques %in% c("COR", "GA", "INV", "MAC", "NU"),
+                  type_substrat == "CM")
+  
+  fit_temp <- glm(recouvrement ~ organismes_benthiques, 
+                  data = recouvrement, family = "poisson")
+  
+  pgirmess::PermTest(fit_temp, B = 9999)
+  
+  print(summary(multcomp::glht(fit_temp, linfct= multcomp::mcp(organismes_benthiques="Tukey"))))
+  
+  
 }

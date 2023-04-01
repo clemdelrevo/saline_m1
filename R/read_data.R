@@ -5,7 +5,7 @@
 read_substrat <- function(){
   
   #dir.create("data/substrat_saline")
-  substrat_csv <- read.csv2("data/substrat_saline/substrat_saline_m1.csv", 
+  substrat_csv <- read.csv("data/substrat_saline/substrat_saline_m1.csv", 
                             dec = "," , sep = ";", header = T)
   
   return(substrat_csv)

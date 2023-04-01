@@ -36,11 +36,11 @@ graphique_recouvrement_substrat_station <- function(recouvrement_substrat){
   
 }
 
-graphique_recouvrement_organismes_corals_station <- function(recouvrement_organismes){
+graphique_recouvrement_organismes_corals_station <- function(recouvrement_organismes_in_substrat){
   
-  #targets::tar_load(recouvrement_organismes)
+  #targets::tar_load(recouvrement_organismes_in_substrat)
   corals <- c("C_B", "C_D", "C_E", "C_F", "C_L", "C_M", "C_SM")
-  organismes_corals_station <- recouvrement_organismes |>
+  organismes_corals_station <- recouvrement_organismes_in_substrat |>
     dplyr::group_by(station, type_substrat, organismes_benthiques) |>
     dplyr::summarise(moyenne_recouvrement = mean(recouvrement),
                      sd_recouvrement = sd(recouvrement),
@@ -92,7 +92,13 @@ graphique_recouvrement_organismes_others_station <- function(recouvrement_organi
                                         ymax = moyenne_recouvrement + erreur_st),
                            position = ggplot2::position_dodge(0.9), width = 0.2)+
     ggplot2::ylab("% cover ± SE")+
-    ggplot2::theme(axis.title.x = ggplot2::element_blank())
+    ggplot2::theme(axis.title.x = ggplot2::element_blank())+
+    ggplot2::annotate("text", x = 2.7, y = 40, label = "***")+
+    ggplot2::annotate("text", x =3 , y = 35, label = "***")+
+    ggplot2::annotate("text", x = 3.3, y = 54, label = "***")+
+    ggplot2::annotate("text", x = 5.7, y = 48, label = "***")+
+    ggplot2::annotate("text", x = 6, y = 43, label = "***")+
+    ggplot2::annotate("text", x = 6.3, y = 32, label = "***")
   
   ggplot2::ggsave("outputs/graphique/recouvrement_station/recouvrement_organismes_others_station.png",
                   plot = ggplot2::last_plot(), dpi = 500)
