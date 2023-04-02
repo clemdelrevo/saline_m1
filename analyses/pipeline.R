@@ -26,7 +26,7 @@ list(
  ,tar_target(recouvrement_organismes_in_substrat, calculs_recouvrement_organismes_in_substrat(substrat))
  
  # tests de recouvrement du substrat par station
- ,tar_target(substrat_filter, test_recouvrement_substrat_station(recouvrement_substrat))
+ #,tar_target(substrat_filter, test_recouvrement_substrat_station(recouvrement_substrat))
  #,tar_target(fit, fit_function(substrat_filter))
  
  # test de recouvrement des organismes par substrat et par station
@@ -40,8 +40,8 @@ list(
              graphique_recouvrement_organismes_corals_station(recouvrement_organismes_in_substrat))
  ,tar_target(barplot_organismes_others_station,
              graphique_recouvrement_organismes_others_station(recouvrement_organismes))
- ,tar_target(assemble_graphique_station, 
-             graphique_assemble_station(barplot_substrat_station,
+ ,tar_target(final_graph_station, 
+             assemblage_graph_station(barplot_substrat_station,
                                            barplot_organismes_corals_station, 
                                            barplot_organismes_others_station))
  
@@ -50,9 +50,9 @@ list(
  ,tar_target(barplot_organismes_corals_radiale, 
              graphique_recouvrement_organismes_corals_radiale(recouvrement_organismes_in_substrat))
  ,tar_target(barplot_organismes_others_radiale,
-             graphique_recouvrement_organismes_others_in_substrat_radiale(recouvrement_organismes_in_substrat))
- ,tar_target(assemble_graphique_radiale, 
-             graphique_assemble_radiale(barplot_substrat_radiale,
+             graphique_recouvrement_organismes_others_radiale(recouvrement_organismes))
+ ,tar_target(final_graph_radiale, 
+             assemblage_graph_radiale(barplot_substrat_radiale,
                                            barplot_organismes_corals_radiale, 
                                            barplot_organismes_others_radiale))
  

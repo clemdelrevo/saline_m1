@@ -63,16 +63,16 @@ test_recouvrement_corals_station <- function(recouvrement_organismes_in_substrat
   
 }
 
-test_recouvrement_others_station <- function(recouvrement_organismes_in_substrat) {
+test_recouvrement_others_station <- function(recouvrement_organismes) {
   
-  #targets::tar_load(recouvrement_organismes_in_substrat)
+  #targets::tar_load(recouvrement_organismes)
   fit <- list()
-  orga <- c("COR", "GA", "INV", "MAC", "NU")
+  orga <- c("COR", "CYA", "GA", "INV", "MAC", "NU")
   
   for(i in orga) {
     
-    #i = "C_D"
-    recouvrement_others <- recouvrement_organismes_in_substrat |>
+    #i = "GA"
+    recouvrement_others <- recouvrement_organismes |>
       dplyr::filter(organismes_benthiques == i)
     
     fit_temp <- glm(recouvrement_others$recouvrement ~ station, data = recouvrement_others, family = "poisson")

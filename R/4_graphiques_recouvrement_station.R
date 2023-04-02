@@ -18,7 +18,7 @@ graphique_recouvrement_substrat_station <- function(recouvrement_substrat){
     ggplot2::geom_errorbar(ggplot2::aes(ymin = moyenne_recouvrement,
                                         ymax = moyenne_recouvrement + erreur_st),
                            position = ggplot2::position_dodge(0.9), width = 0.2)+
-    ggplot2::ylab("% cover ± SE")+
+    ggplot2::ylab("mean % cover ± SE")+
     ggplot2::theme(axis.title.x = ggplot2::element_blank(), legend.position = "none")+
     ggplot2::ylim(c(0,90))+
     ggplot2::annotate("text", x = 1.7, y = 25, label = "***")+
@@ -58,7 +58,7 @@ graphique_recouvrement_organismes_corals_station <- function(recouvrement_organi
     ggplot2::geom_errorbar(ggplot2::aes(ymin = moyenne_recouvrement,
                                         ymax = moyenne_recouvrement + erreur_st),
                            position = ggplot2::position_dodge(0.9), width = 0.2)+
-    ggplot2::ylab("% cover ± SE")+
+    ggplot2::ylab("mean % cover ± SE")+
     ggplot2::theme(axis.title.x = ggplot2::element_blank(), 
                    legend.position = "none")
    
@@ -91,7 +91,7 @@ graphique_recouvrement_organismes_others_station <- function(recouvrement_organi
     ggplot2::geom_errorbar(ggplot2::aes(ymin = moyenne_recouvrement,
                                         ymax = moyenne_recouvrement + erreur_st),
                            position = ggplot2::position_dodge(0.9), width = 0.2)+
-    ggplot2::ylab("% cover ± SE")+
+    ggplot2::ylab("mean % cover ± SE")+
     ggplot2::theme(axis.title.x = ggplot2::element_blank())+
     ggplot2::annotate("text", x = 2.7, y = 40, label = "***")+
     ggplot2::annotate("text", x =3 , y = 35, label = "***")+
@@ -102,6 +102,8 @@ graphique_recouvrement_organismes_others_station <- function(recouvrement_organi
   
   ggplot2::ggsave("outputs/graphique/recouvrement_station/recouvrement_organismes_others_station.png",
                   plot = ggplot2::last_plot(), dpi = 500)
+  
+  return(barplot_organismes_others_station)
   
 }
 
@@ -169,26 +171,20 @@ graphique_recouvrement_organismes_others_in_substrat_station <- function(recouvr
   
 }
 
-graphique_assemble_station <- function(barplot_substrat_station,
-                                barplot_organismes_corals_station, 
-                                barplot_organismes_others_station){
+assemblage_graph_station <- function(barplot_substrat_station,
+                             barplot_organismes_corals_station, 
+                             barplot_organismes_others_station){
   
-    #targets::tar_load(barplot_substrat_station)
-    #targets::tar_load(barplot_organismes_corals_station)
-    #targets::tar_load(barplot_organismes_others_station)
-    png(filename = "outputs/graphique/recouvrement_station/assemble_graphique_organismes_station.png"
-        , width = 1080, height = 720, res = 100)
-    grid::grid.newpage() 
-    # Créer la mise en page : nrow = 2, ncol = 2
-    grid::pushViewport(grid::viewport(layout = grid::grid.layout(2, 2)))
-    # Une fonction pour definir une region dans la mise en page
-    define_region <- function(row, col){
-      grid::viewport(layout.pos.row = row, layout.pos.col = col)
-    } 
-    # Arranger les graphiques
-      print(barplot_substrat_station, vp=define_region(1, 1))
-      print(barplot_organismes_corals_station, vp = define_region(1, 2))
-      print(barplot_organismes_others_station, vp = define_region(2, 1:2))
+  final_graph_station <- cowplot::ggdraw()+
+    cowplot::draw_plot(barplot_substrat_station, 0, 0.5, 0.5, 0.5)+
+    cowplot::draw_plot(barplot_organismes_corals_station, 0.5, 0.5, 0.5, 0.5)+
+    cowplot::draw_plot(barplot_organismes_others_station, 0, 0, 1, 0.5)+
+    cowplot::draw_plot_label(c("A", "B", "C"), c(0, 0.5, 0), c(1, 1, 0.5), size = 15)
   
-      dev.off()
+  ggplot2::ggsave("outputs/graphique/recouvrement_station/final_graph_station.png",
+                  plot = ggplot2::last_plot(), dpi = 500, width = 8, height = 5)
+  
+  return(final_graph_station) 
+  
 }
+  
