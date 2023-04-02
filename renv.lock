@@ -1640,10 +1640,10 @@
     },
     "pgirmess": {
       "Package": "pgirmess",
-      "Version": "2.0.0",
+      "Version": "2.0.1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "9db64cf76c86b391e11efabe56217819",
+      "Hash": "8c2d290e8846e49e4ff9f9a64f0ef44d",
       "Requirements": [
         "boot",
         "sf",
@@ -2119,6 +2119,29 @@
         "tinytex",
         "xfun",
         "yaml"
+      ]
+    },
+    "rnaturalearth": {
+      "Package": "rnaturalearth",
+      "Version": "0.3.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "c97d05220a4112f461eb940f2633d091",
+      "Requirements": [
+        "httr",
+        "jsonlite",
+        "sf",
+        "sp"
+      ]
+    },
+    "rnaturalearthdata": {
+      "Package": "rnaturalearthdata",
+      "Version": "0.1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "0d34b89b43e900467e60f5449226f3e3",
+      "Requirements": [
+        "sp"
       ]
     },
     "rosm": {

@@ -29,6 +29,8 @@ Imports:
     qs,
     readr,
     rgeos,
+    rnaturalearth,
+    rnaturalearthdata,
     rstatix,
     stars,
     sf,
