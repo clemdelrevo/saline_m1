@@ -1,0 +1,512 @@
+print(lapply(fit, pgirmess::PermTest, B=9999))
+for(i in seq_along(fit)) {
+print(summary(multcomp::glht(fit[[i]], linfct= multcomp::mcp(radiale="Tukey"))))
+}
+#targets::tar_load(recouvrement_organismes)
+others <- c("COR", "CYA", "GA", "INV", "MAC", "NU" )
+organismes_others_radiale <- recouvrement_organismes |>
+dplyr::group_by(radiale, organismes_benthiques) |>
+dplyr::summarise(moyenne_recouvrement = mean(recouvrement),
+sd_recouvrement = sd(recouvrement),
+erreur_st = plotrix::std.error(recouvrement)) |>
+dplyr::filter(organismes_benthiques %in% others)
+organismes_corals_radiale$radiale <- forcats::fct_relevel(
+organismes_corals_radiale$radiale, c("N", "C", "S"))
+barplot_organismes_others_radiale <- ggplot2::ggplot(organismes_others_radiale,
+ggplot2::aes(y = moyenne_recouvrement,
+x = organismes_benthiques,
+fill = radiale ))+
+ggplot2::scale_fill_brewer(palette = "Set2")+
+ggplot2::theme_bw()+
+ggplot2::geom_col(position = "dodge")+
+ggplot2::geom_errorbar(ggplot2::aes(ymin = moyenne_recouvrement,
+ymax = moyenne_recouvrement + erreur_st),
+position = ggplot2::position_dodge(0.9), width = 0.2)+
+ggplot2::ylab("% cover ± SE")+
+ggplot2::theme(axis.title.x = ggplot2::element_blank())+
+ggplot2::annotate("text", x = 5.7, y = 48, label = "***")+
+ggplot2::annotate("text", x = 6, y = 43, label = "***")+
+ggplot2::annotate("text", x = 6.3, y = 32, label = "***")
+barplot_organismes_others_radiale
+#targets::tar_load(recouvrement_organismes)
+others <- c("COR", "CYA", "GA", "INV", "MAC", "NU" )
+organismes_others_radiale <- recouvrement_organismes |>
+dplyr::group_by(radiale, organismes_benthiques) |>
+dplyr::summarise(moyenne_recouvrement = mean(recouvrement),
+sd_recouvrement = sd(recouvrement),
+erreur_st = plotrix::std.error(recouvrement)) |>
+dplyr::filter(organismes_benthiques %in% others)
+organismes_others_radiale$radiale <- forcats::fct_relevel(
+organismes_others_radiale$radiale, c("N", "C", "S"))
+barplot_organismes_others_radiale <- ggplot2::ggplot(organismes_others_radiale,
+ggplot2::aes(y = moyenne_recouvrement,
+x = organismes_benthiques,
+fill = radiale ))+
+ggplot2::scale_fill_brewer(palette = "Set2")+
+ggplot2::theme_bw()+
+ggplot2::geom_col(position = "dodge")+
+ggplot2::geom_errorbar(ggplot2::aes(ymin = moyenne_recouvrement,
+ymax = moyenne_recouvrement + erreur_st),
+position = ggplot2::position_dodge(0.9), width = 0.2)+
+ggplot2::ylab("% cover ± SE")+
+ggplot2::theme(axis.title.x = ggplot2::element_blank())+
+ggplot2::annotate("text", x = 5.7, y = 48, label = "***")+
+ggplot2::annotate("text", x = 6, y = 43, label = "***")+
+ggplot2::annotate("text", x = 6.3, y = 32, label = "***")
+barplot_organismes_others_radiale
+barplot_organismes_others_radiale <- ggplot2::ggplot(organismes_others_radiale,
+ggplot2::aes(y = moyenne_recouvrement,
+x = organismes_benthiques,
+fill = radiale ))+
+ggplot2::scale_fill_brewer(palette = "Set2")+
+ggplot2::theme_bw()+
+ggplot2::geom_col(position = "dodge")+
+ggplot2::geom_errorbar(ggplot2::aes(ymin = moyenne_recouvrement,
+ymax = moyenne_recouvrement + erreur_st),
+position = ggplot2::position_dodge(0.9), width = 0.2)+
+ggplot2::ylab("% cover ± SE")+
+ggplot2::theme(axis.title.x = ggplot2::element_blank())+
+ggplot2::annotate("text", x = 5.7, y = 32, label = "***")+
+ggplot2::annotate("text", x = 6, y = 47, label = "**")+
+ggplot2::annotate("text", x = 6.3, y = 43, label = "**")
+barplot_organismes_others_radiale
+substrat <- substrat_csv |>
+dplyr::group_by(groupe, radiale, station, transect, organismes_benthiques) |>
+dplyr::summarise(count = dplyr::n())
+targets::tar_load(substrat_csv)
+substrat <- substrat_csv |>
+dplyr::group_by(groupe, radiale, station, transect, organismes_benthiques) |>
+dplyr::summarise(count = dplyr::n())
+substrat <- substrat |>
+tidyr::spread(type_substrat, count)
+substrat <- substrat |>
+tidyr::spread(organismes_benthique, count)
+substrat <- substrat |>
+tidyr::spread(organismes_benthiques, count)
+substrat
+filter_orga <- substrat_csv |>
+dplyr::group_by(groupe, radiale, station, transect, organismes_benthiques) |>
+dplyr::summarise(count = dplyr::n())
+filter_orga
+filter_orga <- substrat |>
+tidyr::spread(organismes_benthiques, count)
+filter_orga <- substrat_csv |>
+dplyr::group_by(groupe, radiale, station, transect, organismes_benthiques) |>
+dplyr::summarise(count = dplyr::n())
+filter_orga <- substrat |>
+tidyr::spread(organismes_benthiques, count)
+filter_orga <- filter_orga |>
+tidyr::spread(organismes_benthiques, count)
+filter_orga[is.na(c(C_B, C_D, C_E, C_F, C_M, C_SM, COR, GA, INV, MAC, NU))] <- 0
+filter_orga
+C_B  <- tapply(organismes_benthiques$C_B, substrat$station, sum, na.rm = T)
+C_B  <- tapply(filter_orga$C_B, substrat$station, sum, na.rm = T)
+C_D  <- tapply(filter_orga$C_D, substrat$station, sum, na.rm = T)
+C_E  <- tapply(filter_orga$C_E, substrat$station, sum, na.rm = T)
+C_F  <- tapply(filter_orga$C_F, substrat$station, sum, na.rm = T)
+C_M  <- tapply(filter_orga$C_M, substrat$station, sum, na.rm = T)
+C_SM <- tapply(filter_orga$C_SM, substrat$station, sum, na.rm = T)
+COR  <- tapply(filter_orga$COR, substrat$station, sum, na.rm = T)
+GA   <- tapply(filter_orga$GA, substrat$station, sum, na.rm = T)
+INV  <- tapply(filter_orga$INV, substrat$station, sum, na.rm = T)
+MAC  <- tapply(filter_orga$MAC, substrat$station, sum, na.rm = T)
+NU   <- tapply(filter_orga$NUE, substrat$station, sum, na.rm = T)
+NU   <- tapply(filter_orga$NU, substrat$station, sum, na.rm = T)
+df <- cbind(C_B, C_D, C_E, C_F, C_M, C_SM, COR, GA, INV, MAC, NU)
+afc <- ade4::dudi.coa(df, scannf=F, nf=2)
+afc
+circle <- ade4::s.corcircle(afc$co)
+ade4::scatter(afc)
+screeplot <- factoextra::fviz_screeplot (afc, addlabels = TRUE, ylim = c(0, 50))
+screeplot
+factoextra::fviz_ca_biplot (afc, repel = TRUE)
+circle <- ade4::s.corcircle(afc$co)
+dev.new()
+factoextra::fviz_ca_biplot (afc, repel = TRUE)
+targets::tar_load(substrat)
+recouvrement_organismes <- substrat |>
+dplyr::group_by(groupe, radiale, station, transect, organismes_benthiques) |>
+dplyr::summarise(recouvrement = (dplyr::n()/50)*100)
+recouvrement_organismes_wild <- recouvrement_organismes |>
+tidyr::spread(organismes_benthiques, recouvrement)
+recouvrement_organismes_wild[is.na(recouvrement_organismes)] <- 0
+table <- table(substrat$station, substrat$organismes_benthiques)
+chisq.test(table)
+table
+table <- table(substrat$radiale, substrat$organismes_benthiques)
+table
+chisq.test(table)
+targets::tar_visnetwork(targets_only = T)
+targets::tar_visnetwork(targets_only = T)
+targets::tar_make()
+targets::tar_visnetwork(targets_only = T)
+targets::tar_visnetwork(targets_only = T)
+targets::tar_make()
+targets::tar_visnetwork(targets_only = T)
+targets::tar_make()
+targets::tar_visnetwork(targets_only = T)
+targets::tar_load(recouvrement_organismes)
+#targets::tar_load(recouvrement_organismes)
+others <- c("COR", "CYA", "GA", "INV", "MAC", "NU" )
+organismes_others_radiale <- recouvrement_organismes |>
+dplyr::group_by(radiale, organismes_benthiques) |>
+dplyr::summarise(moyenne_recouvrement = mean(recouvrement),
+sd_recouvrement = sd(recouvrement),
+erreur_st = plotrix::std.error(recouvrement)) |>
+dplyr::filter(organismes_benthiques %in% others)
+organismes_others_radiale$radiale <- forcats::fct_relevel(
+organismes_others_radiale$radiale, c("N", "C", "S"))
+barplot_organismes_others_radiale <- ggplot2::ggplot(organismes_others_radiale,
+ggplot2::aes(y = moyenne_recouvrement,
+x = organismes_benthiques,
+fill = radiale ))+
+ggplot2::scale_fill_brewer(palette = "Set2")+
+ggplot2::theme_bw()+
+ggplot2::geom_col(position = "dodge")+
+ggplot2::geom_errorbar(ggplot2::aes(ymin = moyenne_recouvrement,
+ymax = moyenne_recouvrement + erreur_st),
+position = ggplot2::position_dodge(0.9), width = 0.2)+
+ggplot2::ylab("% cover ± SE")+
+ggplot2::theme(axis.title.x = ggplot2::element_blank())+
+ggplot2::annotate("text", x = 5.7, y = 32, label = "***")+
+ggplot2::annotate("text", x = 6, y = 47, label = "**")+
+ggplot2::annotate("text", x = 6.3, y = 43, label = "**")
+barplot_organismes_others_radiale
+dev.new()
+barplot_organismes_others_radiale
+#targets::tar_load(barplot_substrat_radiale)
+#targets::tar_load(barplot_organismes_corals_radiale)
+#targets::tar_load(barplot_organismes_others_radiale)
+png(filename = "outputs/graphique/recouvrement_radiale/assemble_graphique_organismes_radiale.png"
+, width = 1080, height = 720, res = 100)
+grid::grid.newpage()
+# Créer la mise en page : nrow = 2, ncol = 2
+grid::pushViewport(grid::viewport(layout = grid::grid.layout(2, 2)))
+# Une fonction pour definir une region dans la mise en page
+define_region <- function(row, col){
+grid::viewport(layout.pos.row = row, layout.pos.col = col)
+}
+# Arranger les graphiques
+print(barplot_substrat_radiale, vp=define_region(1, 1))
+print(barplot_organismes_corals_radiale, vp = define_region(1, 2))
+print(barplot_organismes_others_radiale, vp = define_region(2, 1:2))
+dev.off()
+targets::tar_visnetwork(targets_only = T)
+targets::tar_make()
+targets::tar_visnetwork(targets_only = T)
+targets::tar_make()
+#targets::tar_load(barplot_substrat_radiale)
+#targets::tar_load(barplot_organismes_corals_radiale)
+#targets::tar_load(barplot_organismes_others_radiale)
+png(filename = "outputs/graphique/recouvrement_radiale/assemble_graphique_radiale.png"
+, width = 1080, height = 720, res = 100)
+grid::grid.newpage()
+# Créer la mise en page : nrow = 2, ncol = 2
+grid::pushViewport(grid::viewport(layout = grid::grid.layout(2, 2)))
+# Une fonction pour definir une region dans la mise en page
+define_region <- function(row, col){
+grid::viewport(layout.pos.row = row, layout.pos.col = col)
+}
+# Arranger les graphiques
+print(barplot_substrat_radiale, vp=define_region(1, 1))
+print(barplot_organismes_corals_radiale, vp = define_region(1, 2))
+print(barplot_organismes_others_radiale, vp = define_region(2, 1:2))
+dev.off()
+targets::tar_visnetwork(targets_only = T)
+targets::tar_make()
+targets::tar_visnetwork(targets_only = T)
+targets::tar_make()
+targets::tar_visnetwork(targets_only = T)
+targets::tar_make()
+garp <- cowplot::ggdraw()+
+cowplot::draw_plot(barplot_substrat_radiale, 0, 0.5, 1, 0.5)+
+cowplot::draw_plot(barplot_organismes_corals_radiale, 0.5, 0.5, 1, 0.5)
+garp
+dev.new()
+garp
+garp <- cowplot::ggdraw()+
+cowplot::draw_plot(barplot_substrat_radiale, 0, 0.5, 0.5, 0.5)+
+cowplot::draw_plot(barplot_organismes_corals_radiale, 0.5, 0.5, 0.5, 0.5)
+garp
+garp <- cowplot::ggdraw()+
+cowplot::draw_plot(barplot_substrat_radiale, 0, 0.5, 0.5, 0.5)+
+cowplot::draw_plot(barplot_organismes_corals_radiale, 0.5, 0.5, 0.5, 0.5)+
+cowplot::draw_plot(barplot_organismes_others_radiale, 0.5, 0, 1, 1)
+garp
+garp <- cowplot::ggdraw()+
+cowplot::draw_plot(barplot_substrat_radiale, 0, 0.5, 0.5, 0.5)+
+cowplot::draw_plot(barplot_organismes_corals_radiale, 0.5, 0.5, 0.5, 0.5)+
+cowplot::draw_plot(barplot_organismes_others_radiale, 0, 0, 1, 0.5)
+garp
+garp <- cowplot::ggdraw()+
+cowplot::draw_plot(barplot_substrat_radiale, 0, 0.5, 0.5, 0.5)+
+cowplot::draw_plot(barplot_organismes_corals_radiale, 0.5, 0.5, 0.5, 0.5)+
+cowplot::draw_plot(barplot_organismes_others_radiale, 0, 0, 1, 0.5)+
+draw_plot_label(c("A", "B", "C"), c(0, 0.5, 0), c(1, 1, 0.5), size = 15)
+garp <- cowplot::ggdraw()+
+cowplot::draw_plot(barplot_substrat_radiale, 0, 0.5, 0.5, 0.5)+
+cowplot::draw_plot(barplot_organismes_corals_radiale, 0.5, 0.5, 0.5, 0.5)+
+cowplot::draw_plot(barplot_organismes_others_radiale, 0, 0, 1, 0.5)+
+cowplot::draw_plot_label(c("A", "B", "C"), c(0, 0.5, 0), c(1, 1, 0.5), size = 15)
+garp
+targets::tar_visnetwork(targets_only = T)
+targets::tar_make()
+targets::tar_visnetwork(targets_only = T)
+targets::tar_make()
+targets::tar_make()
+targets::tar_visnetwork(targets_only = T)
+targets::tar_visnetwork(targets_only = T)
+targets::tar_make()
+final_graph_radiale <- cowplot::ggdraw()+
+cowplot::draw_plot(barplot_substrat_radiale, 0, 0.5, 0.5, 0.5)+
+cowplot::draw_plot(barplot_organismes_corals_radiale, 0.5, 0.5, 0.5, 0.5)+
+cowplot::draw_plot(barplot_organismes_others_radiale, 0, 0, 1, 0.5)+
+cowplot::draw_plot_label(c("A", "B", "C"), c(0, 0.5, 0), c(1, 1, 0.5), size = 15)
+ggplot2::ggsave("outputs/graphique/recouvrement_radiale/final_graph_radiale.png",
+plot = ggplot2::last_plot(), dpi = 500)
+targets::tar_visnetwork(targets_only = T)
+targets::tar_make()
+#targets::tar_load(recouvrement_organismes)
+others <- c("COR", "CYA", "GA", "INV", "MAC", "NU" )
+organismes_others_radiale <- recouvrement_organismes |>
+dplyr::group_by(radiale, organismes_benthiques) |>
+dplyr::summarise(moyenne_recouvrement = mean(recouvrement),
+sd_recouvrement = sd(recouvrement),
+erreur_st = plotrix::std.error(recouvrement)) |>
+dplyr::filter(organismes_benthiques %in% others)
+organismes_others_radiale$radiale <- forcats::fct_relevel(
+organismes_others_radiale$radiale, c("N", "C", "S"))
+barplot_organismes_others_radiale <- ggplot2::ggplot(organismes_others_radiale,
+ggplot2::aes(y = moyenne_recouvrement,
+x = organismes_benthiques,
+fill = radiale ))+
+ggplot2::scale_fill_brewer(palette = "Set2")+
+ggplot2::theme_bw()+
+ggplot2::geom_col(position = "dodge")+
+ggplot2::geom_errorbar(ggplot2::aes(ymin = moyenne_recouvrement,
+ymax = moyenne_recouvrement + erreur_st),
+position = ggplot2::position_dodge(0.9), width = 0.2)+
+ggplot2::ylab("% cover ± SE")+
+ggplot2::theme(axis.title.x = ggplot2::element_blank())+
+ggplot2::annotate("text", x = 5.7, y = 32, label = "***")+
+ggplot2::annotate("text", x = 6, y = 47, label = "**")+
+ggplot2::annotate("text", x = 6.3, y = 43, label = "**")
+ggplot2::ggsave("outputs/graphique/recouvrement_station/recouvrement_organismes_others_radiale.png",
+plot = ggplot2::last_plot(), dpi = 500)
+targets::tar_visnetwork(targets_only = T)
+targets::tar_make()
+targets::tar_visnetwork(targets_only = T)
+targets::tar_make()
+organismes_others_radiale <- recouvrement_organismes |>
+dplyr::group_by(radiale, organismes_benthiques) |>
+dplyr::summarise(moyenne_recouvrement = mean(recouvrement),
+sd_recouvrement = sd(recouvrement),
+erreur_st = plotrix::std.error(recouvrement)) |>
+dplyr::filter(organismes_benthiques %in% others)
+organismes_others_radiale
+organismes_others_radiale
+organismes_others_radiale <- recouvrement_organismes |>
+dplyr::group_by(radiale, organismes_benthiques) |>
+dplyr::summarise(moyenne_recouvrement = mean(recouvrement),
+sd_recouvrement = sd(recouvrement),
+erreur_st = plotrix::std.error(recouvrement)) |>
+dplyr::filter(organismes_benthiques %in% others)
+organismes_others_radiale$radiale <- forcats::fct_relevel(
+organismes_others_radiale$radiale, c("N", "C", "S"))
+barplot_organismes_others_radiale <- ggplot2::ggplot(organismes_others_radiale,
+ggplot2::aes(y = moyenne_recouvrement,
+x = organismes_benthiques,
+fill = radiale ))+
+ggplot2::scale_fill_brewer(palette = "Set2")+
+ggplot2::theme_bw()+
+ggplot2::geom_col(position = "dodge")+
+ggplot2::geom_errorbar(ggplot2::aes(ymin = moyenne_recouvrement,
+ymax = moyenne_recouvrement + erreur_st),
+position = ggplot2::position_dodge(0.9), width = 0.2)+
+ggplot2::ylab("% cover ± SE")+
+ggplot2::theme(axis.title.x = ggplot2::element_blank())+
+ggplot2::annotate("text", x = 5.7, y = 32, label = "***")+
+ggplot2::annotate("text", x = 6, y = 47, label = "**")+
+ggplot2::annotate("text", x = 6.3, y = 43, label = "**")
+barplot_organismes_others_radiale
+barplot_organismes_others_radiale <- ggplot2::ggplot(organismes_others_radiale,
+ggplot2::aes(y = moyenne_recouvrement,
+x = organismes_benthiques,
+fill = radiale ))+
+ggplot2::scale_fill_brewer(palette = "Set2")+
+ggplot2::theme_bw()+
+ggplot2::geom_col(position = "dodge")+
+ggplot2::geom_errorbar(ggplot2::aes(ymin = moyenne_recouvrement,
+ymax = moyenne_recouvrement + erreur_st),
+position = ggplot2::position_dodge(0.9), width = 0.2)+
+ggplot2::ylab("% cover ± SE")+
+ggplot2::theme(axis.title.x = ggplot2::element_blank())+
+ggplot2::annotate("text", x = 5.7, y = 32, label = "***")+
+ggplot2::annotate("text", x = 6, y = 47, label = "**")+
+ggplot2::annotate("text", x = 6.3, y = 43, label = "**")
+ggplot2::ggsave("outputs/graphique/recouvrement_radiale/recouvrement_organismes_others_radiale.png",
+plot = ggplot2::last_plot(), dpi = 500)
+final_graph_radiale <- cowplot::ggdraw()+
+cowplot::draw_plot(barplot_substrat_radiale, 0, 0.5, 0.5, 0.5)+
+cowplot::draw_plot(barplot_organismes_corals_radiale, 0.5, 0.5, 0.5, 0.5)+
+cowplot::draw_plot(barplot_organismes_others_radiale, 0, 0, 1, 0.5)+
+cowplot::draw_plot_label(c("A", "B", "C"), c(0, 0.5, 0), c(1, 1, 0.5), size = 15)
+ggplot2::ggsave("outputs/graphique/recouvrement_radiale/final_graph_radiale.png",
+plot = ggplot2::last_plot(), dpi = 500)
+df
+C_B_r  <- tapply(filter_orga$C_B, substrat$radiale, sum, na.rm = T)
+targets::tar_load(substrat_csv)
+#targets::tar_load(substrat_csv)
+filter_orga <- substrat_csv |>
+dplyr::group_by(groupe, radiale, station, transect, organismes_benthiques) |>
+dplyr::summarise(count = dplyr::n())
+filter_orga <- filter_orga |>
+tidyr::spread(organismes_benthiques, count)
+filter_orga
+C_B  <- tapply(filter_orga$C_B, filter_orga$station, sum, na.rm = T)
+C_D  <- tapply(filter_orga$C_D, filter_orga$station, sum, na.rm = T)
+C_E  <- tapply(filter_orga$C_E, filter_orga$station, sum, na.rm = T)
+C_F  <- tapply(filter_orga$C_F, filter_orga$station, sum, na.rm = T)
+C_M  <- tapply(filter_orga$C_M, filter_orga$station, sum, na.rm = T)
+C_SM <- tapply(filter_orga$C_SM, filter_orga$station, sum, na.rm = T)
+COR  <- tapply(filter_orga$COR, filter_orga$station, sum, na.rm = T)
+GA   <- tapply(filter_orga$GA, filter_orga$station, sum, na.rm = T)
+INV  <- tapply(filter_orga$INV, filter_orga$station, sum, na.rm = T)
+MAC  <- tapply(filter_orga$MAC, filter_orga$station, sum, na.rm = T)
+NU   <- tapply(filter_orga$NU, filter_orga$station, sum, na.rm = T)
+C_B_r  <- tapply(filter_orga$C_B, filter_orga$radiale, sum, na.rm = T)
+C_D_r  <- tapply(filter_orga$C_D, filter_orga$radiale, sum, na.rm = T)
+C_E_r  <- tapply(filter_orga$C_E, filter_orga$radiale, sum, na.rm = T)
+C_F_r  <- tapply(filter_orga$C_F, filter_orga$radiale, sum, na.rm = T)
+C_M_r  <- tapply(filter_orga$C_M, filter_orga$radiale, sum, na.rm = T)
+C_SM_r <- tapply(filter_orga$C_SM, substrat$radiale, sum, na.rm = T)
+COR_r  <- tapply(filter_orga$COR, filter_orga$radiale, sum, na.rm = T)
+GA_r   <- tapply(filter_orga$GA, filter_orga$radiale, sum, na.rm = T)
+C_SM_r <- tapply(filter_orga$C_SM, filter_orga$radiale, sum, na.rm = T)
+INV_r  <- tapply(filter_orga$INV, filter_orga$radiale, sum, na.rm = T)
+MAC_r  <- tapply(filter_orga$MAC, filter_orga$radiale, sum, na.rm = T)
+NU_r   <- tapply(filter_orga$NU, filter_orga$radiale, sum, na.rm = T)
+df <- rbind(cbind(C_B, C_D, C_E, C_F, C_M, C_SM, COR, GA, INV, MAC, NU),
+cbind(C_B_r, C_D_r, C_E_r, C_F_r, C_M_r, C_SM_r, COR_r, GA_r, INV_r, MAC_r, NU_r))
+df
+afc <- ade4::dudi.coa(df, scannf=F, nf=2)
+circle <- ade4::s.corcircle(afc$co)
+ade4::scatter(afc)
+screeplot <- factoextra::fviz_screeplot (afc, addlabels = TRUE, ylim = c(0, 50))
+factoextra::fviz_ca_biplot (afc, repel = TRUE)
+targets::tar_visnetwork(targets_only = T)
+targets::tar_make()
+organismes_others_radiale <- recouvrement_organismes |>
+dplyr::group_by(radiale, organismes_benthiques) |>
+dplyr::summarise(moyenne_recouvrement = mean(recouvrement),
+sd_recouvrement = sd(recouvrement),
+erreur_st = plotrix::std.error(recouvrement)) |>
+dplyr::filter(organismes_benthiques %in% others)
+organismes_others_radiale
+#targets::tar_load(recouvrement_organismes)
+others <- c("COR", "CYA", "GA", "INV", "MAC", "NU" )
+organismes_others_radiale <- recouvrement_organismes |>
+dplyr::group_by(radiale, organismes_benthiques) |>
+dplyr::summarise(moyenne_recouvrement = mean(recouvrement),
+sd_recouvrement = sd(recouvrement),
+erreur_st = plotrix::std.error(recouvrement)) |>
+dplyr::filter(organismes_benthiques %in% others)
+organismes_others_radiale$radiale <- forcats::fct_relevel(
+organismes_others_radiale$radiale, c("N", "C", "S"))
+barplot_organismes_others_radiale <- ggplot2::ggplot(organismes_others_radiale,
+ggplot2::aes(y = moyenne_recouvrement,
+x = organismes_benthiques,
+fill = radiale ))+
+ggplot2::scale_fill_brewer(palette = "Set2")+
+ggplot2::theme_bw()+
+ggplot2::geom_col(position = "dodge")+
+ggplot2::geom_errorbar(ggplot2::aes(ymin = moyenne_recouvrement,
+ymax = moyenne_recouvrement + erreur_st),
+position = ggplot2::position_dodge(0.9), width = 0.2)+
+ggplot2::ylab("mean % cover ± SE")+
+ggplot2::theme(axis.title.x = ggplot2::element_blank())+
+ggplot2::annotate("text", x = 5.7, y = 32, label = "***")+
+ggplot2::annotate("text", x = 6, y = 47, label = "**")+
+ggplot2::annotate("text", x = 6.3, y = 43, label = "**")
+ggplot2::ggsave("outputs/graphique/recouvrement_radiale/recouvrement_organismes_others_radiale.png",
+plot = ggplot2::last_plot(), dpi = 500)
+targets::tar_visnetwork(targets_only = T)
+targets::tar_visnetwork(targets_only = T)
+targets::tar_make()
+targets::tar_visnetwork(targets_only = T)
+targets::tar_make()
+assemblage_graph_radiale(barplot_substrat_radiale,
+barplot_organismes_corals_radiale,
+barplot_organismes_others_radiale, overwrite = T)
+targets::tar_load(final_graph_radiale)
+assemblage_graph_radiale(barplot_substrat_radiale,
+barplot_organismes_corals_radiale,
+barplot_organismes_others_radiale, overwrite = T)
+assemblage_graph_radiale <- function(barplot_substrat_radiale,
+barplot_organismes_corals_radiale,
+barplot_organismes_others_radiale, overwrite = T){
+final_graph_radiale <- cowplot::ggdraw()+
+cowplot::draw_plot(barplot_substrat_radiale, 0, 0.5, 0.5, 0.5)+
+cowplot::draw_plot(barplot_organismes_corals_radiale, 0.5, 0.5, 0.5, 0.5)+
+cowplot::draw_plot(barplot_organismes_others_radiale, 0, 0, 1, 0.5)+
+cowplot::draw_plot_label(c("A", "B", "C"), c(0, 0.5, 0), c(1, 1, 0.5), size = 15)
+ggplot2::ggsave("outputs/graphique/recouvrement_radiale/final_graph_radiale.png",
+plot = ggplot2::last_plot(), dpi = 500, width = 4, height = 3)
+return(final_graph_radiale)
+}
+assemblage_graph_radiale(barplot_substrat_radiale,
+barplot_organismes_corals_radiale,
+barplot_organismes_others_radiale, overwrite = T)
+dev.new()
+final_graph_radiale <- cowplot::ggdraw()+
+cowplot::draw_plot(barplot_substrat_radiale, 0, 0.5, 0.5, 0.5)+
+cowplot::draw_plot(barplot_organismes_corals_radiale, 0.5, 0.5, 0.5, 0.5)+
+cowplot::draw_plot(barplot_organismes_others_radiale, 0, 0, 1, 0.5)+
+cowplot::draw_plot_label(c("A", "B", "C"), c(0, 0.5, 0), c(1, 1, 0.5), size = 15)
+ggplot2::ggsave("outputs/graphique/recouvrement_radiale/final_graph_radiale.png",
+plot = ggplot2::last_plot(), dpi = 500, width = 6, height = 3)
+final_graph_radiale
+final_graph_radiale <- cowplot::ggdraw()+
+cowplot::draw_plot(barplot_substrat_radiale, 0, 0.5, 0.5, 0.5)+
+cowplot::draw_plot(barplot_organismes_corals_radiale, 0.5, 0.5, 0.5, 0.5)+
+cowplot::draw_plot(barplot_organismes_others_radiale, 0, 0, 1, 0.5)+
+cowplot::draw_plot_label(c("A", "B", "C"), c(0, 0.5, 0), c(1, 1, 0.5), size = 15)
+ggplot2::ggsave("outputs/graphique/recouvrement_radiale/final_graph_radiale.png",
+plot = ggplot2::last_plot(), dpi = 500, width = 8, height = 5)
+targets::tar_visnetwork(targets_only = T)
+targets::tar_make()
+targets::tar_make()
+targets::tar_load(substrat)
+recouvrement_organismes <- substrat |>
+dplyr::group_by(groupe, radiale, station, transect, organismes_benthiques) |>
+dplyr::summarise(recouvrement = (dplyr::n()/50)*100)
+recouvrement_organismes_wild <- recouvrement_organismes |>
+tidyr::spread(organismes_benthiques, recouvrement)
+recouvrement_organismes_wild[is.na(recouvrement_organismes)] <- 0
+recouvrement_organismes <- substrat |>
+dplyr::group_by(groupe, radiale, station, transect, organismes_benthiques) |>
+dplyr::summarise(recouvrement = (dplyr::n()/50)*100)
+recouvrement_organismes_wild <- recouvrement_organismes |>
+tidyr::spread(organismes_benthiques, recouvrement)
+recouvrement_organismes_wild
+recouvrement_organismes_wild[is.na(recouvrement_organismes_wild)] <- 0
+recouvrement_organismes_wild
+dist_matrix <- dist(recouvrement_organismes_wild[ , 5:17], method = "euclidean")
+permanova <- vegan::adonis(formula = dist_matrix ~ station * radiale,
+data = recouvrement_organismes_wild, permutations = 9999)
+summary(permanova)
+permanova$aov.tab
+table_station <- table(substrat$station, substrat$organismes_benthiques)
+chisq.test(table_station)
+table_radiale <- table(substrat$radiale, substrat$organismes_benthiques)
+chisq.test(table_orga)
+table_radiale <- table(substrat$radiale, substrat$organismes_benthiques)
+chisq.test(table_radiale)
+dir.create("ouputs/graphique/AFC")
+dir.create("outputs/graphique/AFC")
+factoextra::fviz_ca_biplot (afc, repel = TRUE)
+#dir.create("outputs/graphique/AFC")
+ggplot2::ggsave("outputs/graphique/AFC/afc.png", plot = ggplot2::last_plot(),
+dpi = 500)
+targets::tar_visnetwork(targets_only = T)
+targets::tar_make()
