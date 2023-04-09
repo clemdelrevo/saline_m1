@@ -1,10 +1,11 @@
 Package: saline_m1
-Title: What the Package Does (One Line, Title Case)
+Title: The saline_m1 project is a descriptive and statistical analyse of 
+spatial variation of benthic sessils organims in la Saline reef Reunion 
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+   Beaulieu LF, Delamare C, Mosca J, Tordeur G
+Description: Project will plot mean % cover of organisms in each geomorphologicals
+reefs zone and radiale and test difference mean cover
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8

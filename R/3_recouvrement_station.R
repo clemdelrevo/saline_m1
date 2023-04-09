@@ -1,3 +1,5 @@
+# calculs of substrat cover ----------------------------------------------------
+
 calculs_recouvrement_substrat <- function(substrat){
   
   #targets::tar_load(substrat)
@@ -9,6 +11,8 @@ calculs_recouvrement_substrat <- function(substrat){
   
 }
 
+# calculs of benthic organisms cover -------------------------------------------
+
 calculs_recouvrement_organismes <- function(substrat){
   
   #targets::tar_load(substrat)
@@ -19,6 +23,8 @@ calculs_recouvrement_organismes <- function(substrat){
   return(recouvrement_organismes)
   
 }
+
+# calculs of benthic organisms cover in each substrat --------------------------
 
 calculs_recouvrement_organismes_in_substrat <- function(substrat){
   
