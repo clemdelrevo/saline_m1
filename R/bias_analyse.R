@@ -2,7 +2,7 @@ delta_calculs <- function(substrat){
   
   #targets::tar_load(substrat)
   
-  count <- substrat |>
+  count_substrat <- substrat |>
     dplyr::group_by(groupe, radiale, station, transect, type_substrat) |>
     dplyr::summarise(count = dplyr::n())
   
@@ -39,9 +39,9 @@ delta_calculs <- function(substrat){
 }
     
 
-boxplot_bias <- function(count){
+boxplot_bias <- function(count_substrat){
   
-  bias_station <- ggplot2::ggplot(count, ggplot2::aes(x = type_substrat, 
+  bias_substrat <- ggplot2::ggplot(count_substrat, ggplot2::aes(x = type_substrat, 
                                                       y = count, fill = groupe))+
     ggplot2::geom_boxplot(outlier.alpha = 0.5, outlier.size = 0.5)+
     ggplot2::theme_bw()+
@@ -86,5 +86,23 @@ boxplot_bias <- function(count){
   ggplot2::ggsave("outputs/graphique/analyses_biais/biai_total.png", 
                   plot = ggplot2::last_plot(), dpi = 500,
                   units = "cm", width = 40, height = 20)
+  
+  
+  corals <- c("C_B", "C_D", "C_E", "C_F", "C_L", "C_M", "C_SM")
+  
+  count_orga <- substrat |>
+    dplyr::group_by(groupe, radiale, station, transect, organismes_benthiques) |>
+    dplyr::summarise(count = dplyr::n()) |>
+    dplyr::filter(organismes_benthiques %in% corals)
+  
+  
+  bias_orga <- ggplot2::ggplot(count_orga, ggplot2::aes(x = organismes_benthiques, 
+                                                      y = count, fill = groupe))+
+    ggplot2::geom_boxplot(outlier.alpha = 0.5, outlier.size = 0.5)+
+    ggplot2::theme_bw()+
+    ggplot2::theme(axis.title.x = ggplot2::element_blank())+
+    ggplot2::facet_grid(~ station)
+  
+  
   
 }
