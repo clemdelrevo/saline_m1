@@ -10,13 +10,13 @@ map_echantillonnage <- function(points_transect, reunion_map){
     ggplot2::geom_sf(fill = "white")+
     ggplot2::coord_sf(crs = sf::st_crs(4326), xlim = c(28, 70), ylim = c(0, -30))+
     ggplot2::geom_rect(
-      xmin = 54.75,
-      ymin = -20.2,
-      xmax = 56.5,
-      ymax = -21.7,
+      xmin = 54.5,
+      ymin = -20,
+      xmax = 56.7,
+      ymax = -22,
       fill = NA, 
       colour = "black",
-      linewidth = 0.6
+      linewidth = 0.3
     )+
     ggplot2::theme(axis.text.x = ggplot2::element_blank(),
                    axis.text.y = ggplot2::element_blank())
@@ -68,7 +68,13 @@ map_echantillonnage <- function(points_transect, reunion_map){
     cowplot::draw_plot(map_reunion, x = 0, y = 0, width = 20, height = 20)+
     cowplot::draw_plot(saline, x = 20, y = 0, width =20, height = 20)+
     ggplot2::geom_segment(ggplot2::aes(x = 10.6, xend = 20.7, y = 9.5, yend = 13.75))+
-    ggplot2::geom_segment(ggplot2::aes(x = 10.6, xend = 20.7, y = 9.3, yend = 6.4))
+    ggplot2::geom_segment(ggplot2::aes(x = 10.6, xend = 20.7, y = 9.3, yend = 6.4))+
+    cowplot::draw_plot_label(c("A", "B", "C"), c(9.5, 18, 38), c(13.7, 13.8, 13.8), size = 11)+
+    cowplot::draw_label("M1 BEST ALI
+2022/2023
+R 4.2.2
+WG84
+sources : Millénium Coral Reef Mapping Project pour l'Outre-Mer Français ", x = 34.4, y = 5.5, size = 4)
   
   #dir.create("outputs/graphique/cartes")
   ggplot2::ggsave("outputs/graphique/cartes/map_saline.png", dpi = 500,

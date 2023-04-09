@@ -48,8 +48,8 @@ list(
                                            barplot_organismes_others_radiale))
  
  # analyse du biais
- ,tar_target(calculs_bias, delta_calculs(substrat))
- ,tar_target(graphiques_bias, boxplot_bias(calculs_bias))
+ ,tar_target(biais, test_biais(substrat))
+ ,tar_target(graphiques_biais, boxplot_biais(substrat))
  # map echantillonnage
  ,tar_target(map, map_echantillonnage(points_transect, reunion_map))
  
