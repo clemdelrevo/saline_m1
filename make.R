@@ -9,10 +9,10 @@
 #dir.create("analyses")
 #dir.create("R")
 
-#dir.create("data/points_transect")
-#dir.create("data/reunion_map")
-#dir.create("data/substrat_saline")
+
 #dir.create("outputs/graphique")
+#dir.create("outputs/graphique/AFC")
+#dir.create("outputs/graphique/analyses_biais")
 #dir.create("outputs/graphique/cartes")
 #dir.create("outputs/graphique/recouvrement_station")
 #dir.create("outputs/graphique/recouvrement_radiale")
