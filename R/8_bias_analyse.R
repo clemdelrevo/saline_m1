@@ -1,7 +1,10 @@
+# comparaison of count between group with GLM ----------------------------------
+
 test_biais <- function(substrat){
   
   #targets::tar_load(substrat)
   
+  # filter data
   count_substrat <- substrat |>
     dplyr::group_by(groupe, radiale, station, transect, type_substrat) |>
     dplyr::summarise(count = dplyr::n())
@@ -36,6 +39,8 @@ test_biais <- function(substrat){
   
 }
   
+# plot count difference between group for each type of substrat ----------------
+
 boxplot_biais <- function(substrat){
   
   count_substrat <- substrat |>

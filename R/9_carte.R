@@ -1,11 +1,15 @@
+# create map of study area -----------------------------------------------------
+
 map_echantillonnage <- function(points_transect, reunion_map){
   
   #targets::tar_load(reunion_map)
   #targets::tar_load(points_transect)
   
+  # extract map of the world in rnaturalearth package
   world <- rnaturalearth::ne_countries(scale='medium',returnclass = 'sf')
   world <- sf::st_transform(world, crs = "EPSG:4326")
   
+  # plot map of the world
   map_world <- ggplot2::ggplot(world)+
     ggplot2::geom_sf(fill = "white")+
     ggplot2::coord_sf(crs = sf::st_crs(4326), xlim = c(28, 70), ylim = c(0, -30))+
@@ -21,10 +25,13 @@ map_echantillonnage <- function(points_transect, reunion_map){
     ggplot2::theme(axis.text.x = ggplot2::element_blank(),
                    axis.text.y = ggplot2::element_blank())
   
+  # sumplify map of Reunion
   saline_map_simple <- sf::st_simplify(reunion_map, dTolerance = 33)
   
+  # filter points data
   points_transect <- points_transect[1:9,]
   
+  # create map of la Saline reef
   saline <- ggplot2::ggplot(data = saline_map_simple)+
     ggplot2::geom_sf(ggplot2::aes(fill = l1_attrib), 
                      col = "grey", )+
@@ -42,7 +49,7 @@ map_echantillonnage <- function(points_transect, reunion_map){
     ggspatial::annotation_scale(location = "br", line_width = .5) +
     ggspatial::annotation_north_arrow(location = "bl", height = ggplot2::unit(0.7, "cm"), width = ggplot2::unit(0.7, "cm"))
   
-  
+  # plot map of Reunion
   reunion <- ggplot2::ggplot(data = reunion_map)+
     ggplot2::geom_sf(fill = "grey", )+
     ggplot2::theme(panel.background = ggplot2::element_rect(fill = "light blue"))+
@@ -59,6 +66,7 @@ map_echantillonnage <- function(points_transect, reunion_map){
       linewidth = 0.6
     )
   
+  # assemble all plot
   map_reunion <- cowplot::ggdraw(reunion)+
     cowplot::draw_plot(map_world, width = 0.38, height = 0.38, 
                        x = 0.16, y = 0.42)

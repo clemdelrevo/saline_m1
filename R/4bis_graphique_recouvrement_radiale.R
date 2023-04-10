@@ -1,11 +1,14 @@
+# barplot of mean % cover ± SE of substrat -------------------------------------
+
 graphique_recouvrement_substrat_radiale <- function(recouvrement_substrat, overwrite = TRUE){
   
   #targets::tar_load(recouvrement_substrat)
+  
   barplot_substrat_radiale <- recouvrement_substrat |>
     dplyr::group_by(radiale, type_substrat) |>
-    dplyr::summarise(moyenne_recouvrement = mean(recouvrement),
-                     sd_recouvrement = sd(recouvrement),
-                     erreur_st = plotrix::std.error(recouvrement))
+    dplyr::summarise(moyenne_recouvrement = mean(recouvrement),   # mean calcul
+                     sd_recouvrement = sd(recouvrement),         # SD calcul
+                     erreur_st = plotrix::std.error(recouvrement))  # SE calcul
   
   barplot_substrat_radiale$radiale <- forcats::fct_relevel(
     barplot_substrat_radiale$radiale, c("N", "C", "S"))
@@ -43,15 +46,19 @@ graphique_recouvrement_substrat_radiale <- function(recouvrement_substrat, overw
   
 }
 
+# barplot of mean % cover ± SE of corals morphotypes ---------------------------
+
 graphique_recouvrement_organismes_corals_radiale <- function(recouvrement_organismes_in_substrat, overwrite = TRUE){
   
   #targets::tar_load(recouvrement_organismes_in_substrat)
+  
   corals <- c("C_B", "C_D", "C_E", "C_F", "C_L", "C_M", "C_SM")
+  
   organismes_corals_radiale <- recouvrement_organismes_in_substrat |>
     dplyr::group_by(radiale, type_substrat, organismes_benthiques) |>
-    dplyr::summarise(moyenne_recouvrement = mean(recouvrement),
-                     sd_recouvrement = sd(recouvrement),
-                     erreur_st = plotrix::std.error(recouvrement)) |>
+    dplyr::summarise(moyenne_recouvrement = mean(recouvrement),    # mean calcul
+                     sd_recouvrement = sd(recouvrement),         # SD calcul
+                     erreur_st = plotrix::std.error(recouvrement)) |> #SE calcul
     dplyr::filter(type_substrat == "CV") |>
     dplyr::filter(organismes_benthiques %in% corals)
   
@@ -91,16 +98,19 @@ graphique_recouvrement_organismes_corals_radiale <- function(recouvrement_organi
   
 }
 
+# barplot of mean % cover ± SE of others benthics sessils organisms ------------
+
 graphique_recouvrement_organismes_others_radiale <- function(recouvrement_organismes, overwrite = TRUE){
   
   #targets::tar_load(recouvrement_organismes)
+  
   others <- c("COR", "CYA", "GA", "INV", "MAC", "NU" )
   
   organismes_others_radiale <- recouvrement_organismes |>
     dplyr::group_by(radiale, organismes_benthiques) |>
-    dplyr::summarise(moyenne_recouvrement = mean(recouvrement),
-                     sd_recouvrement = sd(recouvrement),
-                     erreur_st = plotrix::std.error(recouvrement)) |>
+    dplyr::summarise(moyenne_recouvrement = mean(recouvrement),  # mean calcul
+                     sd_recouvrement = sd(recouvrement),        # SD calcul
+                     erreur_st = plotrix::std.error(recouvrement)) |> # SE calcul
     dplyr::filter(organismes_benthiques %in% others)
   
   organismes_others_radiale$radiale <- forcats::fct_relevel(
@@ -129,16 +139,20 @@ graphique_recouvrement_organismes_others_radiale <- function(recouvrement_organi
   
 }
 
+# barplot of mean % cover ± SE of others benthics 
+# sessils organisms in each substrat -------------------------------------------
 
 graphique_recouvrement_organismes_others_in_substrat_radiale <- function(recouvrement_organismes_in_substrat, overwrite = TRUE){
   
   #targets::tar_load(recouvrement_organismes_in_substrat)
+  
   others <- c("COR", "CYA", "GA", "INV", "MAC", "NU" )
+  
   organismes_others_in_substrat_radiale <- recouvrement_organismes_in_substrat |>
     dplyr::group_by(radiale, type_substrat, organismes_benthiques) |>
-    dplyr::summarise(moyenne_recouvrement = mean(recouvrement),
-                     sd_recouvrement = sd(recouvrement),
-                     erreur_st = plotrix::std.error(recouvrement)) |>
+    dplyr::summarise(moyenne_recouvrement = mean(recouvrement),    # mean calcul
+                     sd_recouvrement = sd(recouvrement),         # SD calcul
+                     erreur_st = plotrix::std.error(recouvrement)) |>  # SE calcul
     dplyr::filter(type_substrat != "CV") |>
     dplyr::filter(organismes_benthiques %in% others)
   
@@ -163,6 +177,8 @@ graphique_recouvrement_organismes_others_in_substrat_radiale <- function(recouvr
   return(barplot_organismes_others_in_substrat_radiale)
   
 }
+
+# merge of substrat, corals and others benthic organisms barplots --------------
 
 assemblage_graph_radiale <- function(barplot_substrat_radiale,
                        barplot_organismes_corals_radiale, 
