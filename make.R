@@ -5,17 +5,17 @@
 #usethis::use_description(check_name = FALSE)
 
 #dir.create("data")
-#dir.create("outputs")
 #dir.create("analyses")
 #dir.create("R")
 
 
-#dir.create("outputs/graphique")
-#dir.create("outputs/graphique/AFC")
-#dir.create("outputs/graphique/analyses_biais")
-#dir.create("outputs/graphique/cartes")
-#dir.create("outputs/graphique/recouvrement_station")
-#dir.create("outputs/graphique/recouvrement_radiale")
+dir.create("outputs")
+dir.create("outputs/graphique")
+dir.create("outputs/graphique/AFC")
+dir.create("outputs/graphique/analyses_biais")
+dir.create("outputs/graphique/cartes")
+dir.create("outputs/graphique/recouvrement_station")
+dir.create("outputs/graphique/recouvrement_radiale")
 
 # renv
 

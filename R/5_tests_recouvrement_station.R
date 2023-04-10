@@ -5,7 +5,7 @@ test_substrat_station <- function(recouvrement_substrat){
 
 #targets::tar_load(recouvrement_substrat)
 
-  message(cli::rule(line_col = "blue", left = "GLM test permutation susbtrat"))
+  message(cli::rule(line_col = "blue", left = "GLM test permutation substrat"))
   
   fit_substrat <- list()
 

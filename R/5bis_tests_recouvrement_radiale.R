@@ -5,7 +5,7 @@ test_substrat_radiale <- function(recouvrement_substrat){
   
   #targets::tar_load(recouvrement_substrat)
   
-  message(cli::rule(line_col = "blue", left = "GLM test permutation susbtrat"))
+  message(cli::rule(line_col = "blue", left = "GLM test permutation substrat"))
   
   fit_substrat <- list()
   
