@@ -22,6 +22,8 @@ test_biais <- function(substrat){
 
   }
   
+  message(cli::rule(line_col = "red", left = "analyse of bias"))
+  
   print(lapply(test_bias, car::Anova, test = "F"))
   
   tuk.cld <- list()

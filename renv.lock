@@ -422,10 +422,10 @@
     },
     "cli": {
       "Package": "cli",
-      "Version": "3.6.0",
+      "Version": "3.6.1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "3177a5a16c243adc199ba33117bd9657",
+      "Hash": "89e6d8219950eac806ae0c489052048a",
       "Requirements": []
     },
     "clipr": {
@@ -909,10 +909,10 @@
     },
     "ggplot2": {
       "Package": "ggplot2",
-      "Version": "3.4.1",
+      "Version": "3.4.2",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "d494daf77c4aa7f084dbbe6ca5dcaca7",
+      "Hash": "3a147ee02e85a8941aad9909f1b43b7b",
       "Requirements": [
         "MASS",
         "cli",
@@ -1640,10 +1640,10 @@
     },
     "pgirmess": {
       "Package": "pgirmess",
-      "Version": "2.0.1",
+      "Version": "2.0.2",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "8c2d290e8846e49e4ff9f9a64f0ef44d",
+      "Hash": "a2b63d9ecfee4cfbc00c5b9b42ca12b3",
       "Requirements": [
         "boot",
         "sf",
@@ -2423,10 +2423,10 @@
     },
     "stars": {
       "Package": "stars",
-      "Version": "0.6-0",
+      "Version": "0.6-1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "8c779309dc9fa1aa45bf98498330fe69",
+      "Hash": "4dbde0da28637e13910e898960f2a993",
       "Requirements": [
         "abind",
         "classInt",

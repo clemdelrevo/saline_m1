@@ -16,6 +16,7 @@ Imports:
     devtools,
     dplyr,
     car,
+    cli,
     cowplot,
     factoextra,
     FactoMineR,

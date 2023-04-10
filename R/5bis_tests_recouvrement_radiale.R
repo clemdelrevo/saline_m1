@@ -5,6 +5,8 @@ test_substrat_radiale <- function(recouvrement_substrat){
   
   #targets::tar_load(recouvrement_substrat)
   
+  message(cli::rule(line_col = "blue", left = "GLM test permutation susbtrat"))
+  
   fit_substrat <- list()
   
   for(i in levels(recouvrement_substrat$type_substrat)){
@@ -35,6 +37,8 @@ test_substrat_radiale <- function(recouvrement_substrat){
   
   print(tukey_test)
   
+  message(cli::rule(line_col = "blue", left = "enf of analyses"))
+  
 }
 
 # --- Tests de recouvrement de chaque formes de coraux 
@@ -43,6 +47,8 @@ test_substrat_radiale <- function(recouvrement_substrat){
 test_corals_radiale <- function(recouvrement_organismes_in_substrat){
   
   #targets::tar_load(recouvrement_organismes_in_substrat)
+  
+  message(cli::rule(line_col = "coral", left = "GLM test permutation corals forms"))
   
   factor     <- c("C_B", "C_D", "C_E", "C_F", "C_M", "C_SM")
   fit_corals <- list()
@@ -76,6 +82,8 @@ test_corals_radiale <- function(recouvrement_organismes_in_substrat){
   
   print(tukey_test)
   
+  message(cli::rule(line_col = "coral", left = "enf of analyses"))
+  
 }
 
 # --- Tests de recouvrement des autres types d'organismes benthiques 
@@ -84,6 +92,8 @@ test_corals_radiale <- function(recouvrement_organismes_in_substrat){
 test_orga_radiale <- function(recouvrement_organismes){
   
   #targets::tar_load(recouvrement_organismes)
+  
+  message(cli::rule(line_col = "green", left = "GLM test permutation other benthic organisms"))
   
   fit_orga <- list()
   
@@ -116,5 +126,7 @@ test_orga_radiale <- function(recouvrement_organismes){
   }  
   
   print(tukey_model)
-  
+ 
+  message(cli::rule(line_col = "green", left = "end of analyses"))
+   
 }
